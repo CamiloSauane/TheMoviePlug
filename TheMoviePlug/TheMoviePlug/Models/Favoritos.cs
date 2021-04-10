@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,12 @@ namespace TheMoviePlug.Models
     /// </summary>
     public class Favoritos
     {
+
+        /// <summary>
+        /// Chave primária para a tabela do relacionamento entre Utilizadores e Filmes
+        /// </summary>
+        [Key]
+        public int Id { get; set; }
 
         /// <summary>
         /// Chave forasteira para o Utilizador que adicionou o Filme como Favorito

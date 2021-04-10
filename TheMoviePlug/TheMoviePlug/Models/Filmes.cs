@@ -51,7 +51,10 @@ namespace TheMoviePlug.Models
         /// <summary>
         /// Nome do realizador do Filme
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "O Nome é de preenchimento obrigatório.")]
+        [StringLength(40, ErrorMessage = "O {0} não pode ter mais de {1} carateres.")]
+        [RegularExpression("[A-ZÂÓÍÉ][a-záéíóúàèìòùâêîôûãôûäëïöüçñ]+(( | d[oa](s)? | (d)?e |-|'| d')[A-ZÂÓÍÉ][a-záéíóúàèìòùâêîôûãôûäëïöüçñ]+){1,3}",
+         ErrorMessage = "Só são aceites letras.<br />A primeira letra de cada nome é uma Maiúscula seguida de letras minúsculas.<br />Deve escrever entre 2 e 4 nomes.")]
         public string Realizador { get; set; }
 
         /// <summary>
