@@ -16,6 +16,7 @@ namespace TheMoviePlug.Models
         /// <summary>
         /// Identificador do Link
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace TheMoviePlug.Models
 
         public Utilizadores()
         {
-
+            // inicializar as listas
             ListaLinks = new HashSet<Links>();
             ListaFavoritos = new HashSet<Favoritos>();
 
@@ -23,6 +23,7 @@ namespace TheMoviePlug.Models
         /// <summary>
         /// Identificador do Utilizador
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -45,8 +46,8 @@ namespace TheMoviePlug.Models
         /// </summary>
         [Display(Name = "Número de telemóvel")]
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        [StringLength(9, MinimumLength = 9, ErrorMessage = "O {0} deve ter exatamente {1} caracteres.")]
-        [RegularExpression("[9][1236][0-9]{8}", ErrorMessage = "Deve escrever exatamente 9 algarismos!<br />Quanto aos dois primeiros algarismos deve: começar por 9 seguido de 1, 2, 3 ou 6.")] // <=> filtro
+        //[StringLength(9, MinimumLength = 9, ErrorMessage = "O {0} deve ter exatamente {1} caracteres.")]
+        //[RegularExpression("[9][1236][0-9]{8}", ErrorMessage = "Deve escrever exatamente 9 algarismos!<br />Quanto aos dois primeiros algarismos deve: começar por 9 seguido de 1, 2, 3 ou 6.")] // <=> filtro
         public string Telemovel { get; set; }
 
 

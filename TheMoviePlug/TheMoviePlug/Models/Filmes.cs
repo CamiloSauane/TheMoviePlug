@@ -14,7 +14,7 @@ namespace TheMoviePlug.Models
 
         public Filmes()
         {
-
+            // inicializar as listas
             ListaDeLinks = new HashSet<Links>();
             ListaDeFavoritos = new HashSet<Favoritos>();
 
@@ -23,6 +23,7 @@ namespace TheMoviePlug.Models
         /// <summary>
         /// Identificador do Filme
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
