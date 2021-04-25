@@ -23,6 +23,7 @@ namespace TheMoviePlug.Models
         /// Uniform Resource Locator do Link
         /// </summary>
         [Required]
+        [Url]
         public string URL { get; set; }
 
         /// <summary>

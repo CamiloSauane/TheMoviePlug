@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.Titulo)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Imagem)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th>
@@ -44,6 +47,12 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Imagem)"
+                     width="50"
+                     alt="Capa do Filme @Html.DisplayFor(modelItem => item.Titulo)"
+                     title="@Html.DisplayFor(modelItem => item.Titulo)" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Categoria)

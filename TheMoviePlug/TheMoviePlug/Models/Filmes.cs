@@ -33,6 +33,12 @@ namespace TheMoviePlug.Models
         public string Titulo { get; set; }
 
         /// <summary>
+        /// Capa do Filme
+        /// </summary>
+        [Required]
+        public string Imagem { get; set; }
+
+        /// <summary>
         /// Categoria principal a que o Filme pertence
         /// </summary>
         [Required]
