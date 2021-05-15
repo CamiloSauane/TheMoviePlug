@@ -10,7 +10,6 @@ namespace TheMoviePlug.Data
     public class ApplicationDbContext : IdentityDbContext
     {
 
-        public DbSet<Favoritos> Favoritos { get; set; }
         public DbSet<Filmes> Filmes { get; set; }
         public DbSet<Links> Links { get; set; }
         public DbSet<Utilizadores> Utilizadores { get; set; }
@@ -128,80 +127,6 @@ namespace TheMoviePlug.Data
 				new Links { Id = 45, URL = "http://www.sometimesredsometimesblue.com/", Visivel = true, UtilizadorFK = 8, FilmeFK = 8 },
 				new Links { Id = 46, URL = "http://www.patience-is-a-virtue.org/", Visivel = true, UtilizadorFK = 11, FilmeFK = 11 },
 				new Links { Id = 47, URL = "http://www.rock-paper-scissors-game.com/", Visivel = true, UtilizadorFK = 3, FilmeFK = 20 }
-			);
-
-
-			modelBuilder.Entity<Favoritos>().HasData(
-				new Favoritos { Id = 1, UtilizadorFK = 1, FilmeFK = 1 },
-				new Favoritos { Id = 2, UtilizadorFK = 1, FilmeFK = 2 },
-				new Favoritos { Id = 3, UtilizadorFK = 1, FilmeFK = 3 },
-				new Favoritos { Id = 4, UtilizadorFK = 1, FilmeFK = 4 },
-				new Favoritos { Id = 5, UtilizadorFK = 1, FilmeFK = 5 },
-				new Favoritos { Id = 6, UtilizadorFK = 1, FilmeFK = 6 },
-				new Favoritos { Id = 7, UtilizadorFK = 1, FilmeFK = 7 },
-				new Favoritos { Id = 8, UtilizadorFK = 1, FilmeFK = 8 },
-				new Favoritos { Id = 9, UtilizadorFK = 1, FilmeFK = 9 },
-				new Favoritos { Id = 10, UtilizadorFK = 2, FilmeFK = 4 },
-				new Favoritos { Id = 11, UtilizadorFK = 2, FilmeFK = 9 },
-				new Favoritos { Id = 12, UtilizadorFK = 2, FilmeFK = 19 },
-				new Favoritos { Id = 13, UtilizadorFK = 3, FilmeFK = 5 },
-				new Favoritos { Id = 14, UtilizadorFK = 6, FilmeFK = 10 },
-				new Favoritos { Id = 15, UtilizadorFK = 6, FilmeFK = 11 },
-				new Favoritos { Id = 16, UtilizadorFK = 6, FilmeFK = 12 },
-				new Favoritos { Id = 17, UtilizadorFK = 6, FilmeFK = 13 },
-				new Favoritos { Id = 18, UtilizadorFK = 13, FilmeFK = 1 },
-				new Favoritos { Id = 19, UtilizadorFK = 13, FilmeFK = 6 },
-				new Favoritos { Id = 20, UtilizadorFK = 13, FilmeFK = 7 },
-				new Favoritos { Id = 21, UtilizadorFK = 13, FilmeFK = 8 },
-				new Favoritos { Id = 22, UtilizadorFK = 13, FilmeFK = 13 },
-				new Favoritos { Id = 23, UtilizadorFK = 13, FilmeFK = 17 },
-				new Favoritos { Id = 24, UtilizadorFK = 13, FilmeFK = 18 },
-				new Favoritos { Id = 25, UtilizadorFK = 13, FilmeFK = 19 },
-				new Favoritos { Id = 26, UtilizadorFK = 13, FilmeFK = 20 },
-				new Favoritos { Id = 27, UtilizadorFK = 14, FilmeFK = 2 },
-				new Favoritos { Id = 28, UtilizadorFK = 14, FilmeFK = 3 },
-				new Favoritos { Id = 29, UtilizadorFK = 14, FilmeFK = 9 },
-				new Favoritos { Id = 30, UtilizadorFK = 15, FilmeFK = 17 },
-				new Favoritos { Id = 31, UtilizadorFK = 15, FilmeFK = 19 },
-				new Favoritos { Id = 32, UtilizadorFK = 15, FilmeFK = 21 },
-				new Favoritos { Id = 33, UtilizadorFK = 18, FilmeFK = 2 },
-				new Favoritos { Id = 34, UtilizadorFK = 19, FilmeFK = 14 },
-				new Favoritos { Id = 35, UtilizadorFK = 20, FilmeFK = 14 },
-				new Favoritos { Id = 36, UtilizadorFK = 21, FilmeFK = 15 },
-				new Favoritos { Id = 37, UtilizadorFK = 21, FilmeFK = 16 },
-				new Favoritos { Id = 38, UtilizadorFK = 21, FilmeFK = 17 },
-				new Favoritos { Id = 39, UtilizadorFK = 21, FilmeFK = 18 },
-				new Favoritos { Id = 40, UtilizadorFK = 21, FilmeFK = 19 },
-				new Favoritos { Id = 41, UtilizadorFK = 21, FilmeFK = 20 },
-				new Favoritos { Id = 42, UtilizadorFK = 21, FilmeFK = 21 },
-				new Favoritos { Id = 43, UtilizadorFK = 26, FilmeFK = 1 },
-				new Favoritos { Id = 44, UtilizadorFK = 27, FilmeFK = 1 },
-				new Favoritos { Id = 45, UtilizadorFK = 27, FilmeFK = 21 },
-				new Favoritos { Id = 46, UtilizadorFK = 28, FilmeFK = 1 },
-				new Favoritos { Id = 47, UtilizadorFK = 28, FilmeFK = 2 },
-				new Favoritos { Id = 48, UtilizadorFK = 28, FilmeFK = 3 },
-				new Favoritos { Id = 49, UtilizadorFK = 28, FilmeFK = 4 },
-				new Favoritos { Id = 50, UtilizadorFK = 28, FilmeFK = 5 },
-				new Favoritos { Id = 51, UtilizadorFK = 28, FilmeFK = 6 },
-				new Favoritos { Id = 52, UtilizadorFK = 28, FilmeFK = 7 },
-				new Favoritos { Id = 53, UtilizadorFK = 28, FilmeFK = 8 },
-				new Favoritos { Id = 54, UtilizadorFK = 28, FilmeFK = 9 },
-				new Favoritos { Id = 55, UtilizadorFK = 28, FilmeFK = 10 },
-				new Favoritos { Id = 56, UtilizadorFK = 28, FilmeFK = 11 },
-				new Favoritos { Id = 57, UtilizadorFK = 28, FilmeFK = 12 },
-				new Favoritos { Id = 58, UtilizadorFK = 28, FilmeFK = 13 },
-				new Favoritos { Id = 59, UtilizadorFK = 28, FilmeFK = 20 },
-				new Favoritos { Id = 60, UtilizadorFK = 29, FilmeFK = 4 },
-				new Favoritos { Id = 61, UtilizadorFK = 29, FilmeFK = 5 },
-				new Favoritos { Id = 62, UtilizadorFK = 29, FilmeFK = 6 },
-				new Favoritos { Id = 63, UtilizadorFK = 29, FilmeFK = 7 },
-				new Favoritos { Id = 64, UtilizadorFK = 30, FilmeFK = 8 },
-				new Favoritos { Id = 65, UtilizadorFK = 31, FilmeFK = 9 },
-				new Favoritos { Id = 66, UtilizadorFK = 31, FilmeFK = 10 },
-				new Favoritos { Id = 67, UtilizadorFK = 31, FilmeFK = 11 },
-				new Favoritos { Id = 68, UtilizadorFK = 31, FilmeFK = 12 },
-				new Favoritos { Id = 69, UtilizadorFK = 31, FilmeFK = 13 },
-				new Favoritos { Id = 70, UtilizadorFK = 31, FilmeFK = 20 }
 			);
 
 		}

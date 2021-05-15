@@ -16,7 +16,7 @@ namespace TheMoviePlug.Models
         {
             // inicializar as listas
             ListaLinks = new HashSet<Links>();
-            ListaFavoritos = new HashSet<Favoritos>();
+            ListaFilmesFav = new HashSet<Filmes>();
 
         }
 
@@ -63,7 +63,7 @@ namespace TheMoviePlug.Models
         /// <summary>
         /// Lista de Favoritos do Utilizador
         /// </summary>
-        public ICollection<Favoritos> ListaFavoritos { get; set; }
+        public ICollection<Filmes> ListaFilmesFav { get; set; }
 
     }
 }
