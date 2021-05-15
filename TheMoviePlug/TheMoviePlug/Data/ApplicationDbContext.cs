@@ -10,9 +10,10 @@ namespace TheMoviePlug.Data
     public class ApplicationDbContext : IdentityDbContext
     {
 
-        public DbSet<Filmes> Filmes { get; set; }
-        public DbSet<Links> Links { get; set; }
-        public DbSet<Utilizadores> Utilizadores { get; set; }
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+			: base(options)
+		{
+		}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -131,9 +132,9 @@ namespace TheMoviePlug.Data
 
 		}
 
-		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
-    }
+		public DbSet<Filmes> Filmes { get; set; }
+		public DbSet<Links> Links { get; set; }
+		public DbSet<Utilizadores> Utilizadores { get; set; }
+
+	}
 }
