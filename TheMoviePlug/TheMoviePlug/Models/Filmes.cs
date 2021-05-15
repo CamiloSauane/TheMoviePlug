@@ -30,12 +30,14 @@ namespace TheMoviePlug.Models
         /// Título do Filme
         /// </summary>
         [Required]
+        [Display(Name = "Título")]
         public string Titulo { get; set; }
 
         /// <summary>
         /// Capa do Filme
         /// </summary>
         [Required]
+        [Display(Name = "Capa do filme")]
         public string Imagem { get; set; }
 
         /// <summary>
@@ -47,12 +49,14 @@ namespace TheMoviePlug.Models
         /// <summary>
         /// Data de lançamento do Filme
         /// </summary>
+        [Display(Name = "Data de lançamento")]
         public DateTime Lancamento { get; set; }
 
         /// <summary>
         /// Classificação (de 0.0 a 10.0) do Filme
         /// </summary>
         [Required]
+        [Display(Name = "Classificação")]
         public string Classificacao { get; set; }
 
         /// <summary>
