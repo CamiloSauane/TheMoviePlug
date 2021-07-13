@@ -36,7 +36,6 @@ namespace TheMoviePlug.Models
         /// <summary>
         /// Capa do Filme
         /// </summary>
-        [Required]
         [Display(Name = "Capa do filme")]
         public string Imagem { get; set; }
 

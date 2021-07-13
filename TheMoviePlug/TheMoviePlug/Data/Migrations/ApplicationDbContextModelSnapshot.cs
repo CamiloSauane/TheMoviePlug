@@ -254,7 +254,6 @@ namespace TheMoviePlug.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Imagem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Lancamento")

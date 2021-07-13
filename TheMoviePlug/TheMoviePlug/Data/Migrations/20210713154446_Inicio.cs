@@ -14,7 +14,7 @@ namespace TheMoviePlug.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Imagem = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Imagem = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Lancamento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Classificacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -45,7 +45,7 @@ namespace TheMoviePlug.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Favoritos",
+                name: "FilmesUtilizadores",
                 columns: table => new
                 {
                     ListaFilmesFavId = table.Column<int>(type: "int", nullable: false),
@@ -53,15 +53,15 @@ namespace TheMoviePlug.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Favoritos", x => new { x.ListaFilmesFavId, x.ListaUtilizadoresFavId });
+                    table.PrimaryKey("PK_FilmesUtilizadores", x => new { x.ListaFilmesFavId, x.ListaUtilizadoresFavId });
                     table.ForeignKey(
-                        name: "FK_Favoritos_Filmes_ListaFilmesFavId",
+                        name: "FK_FilmesUtilizadores_Filmes_ListaFilmesFavId",
                         column: x => x.ListaFilmesFavId,
                         principalTable: "Filmes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Favoritos_Utilizadores_ListaUtilizadoresFavId",
+                        name: "FK_FilmesUtilizadores_Utilizadores_ListaUtilizadoresFavId",
                         column: x => x.ListaUtilizadoresFavId,
                         principalTable: "Utilizadores",
                         principalColumn: "Id",
@@ -232,8 +232,8 @@ namespace TheMoviePlug.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Favoritos_ListaUtilizadoresFavId",
-                table: "Favoritos",
+                name: "IX_FilmesUtilizadores_ListaUtilizadoresFavId",
+                table: "FilmesUtilizadores",
                 column: "ListaUtilizadoresFavId");
 
             migrationBuilder.CreateIndex(
@@ -250,7 +250,7 @@ namespace TheMoviePlug.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Favoritos");
+                name: "FilmesUtilizadores");
 
             migrationBuilder.DropTable(
                 name: "Links");

@@ -10,8 +10,8 @@ using TheMoviePlug.Data;
 namespace TheMoviePlug.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210709103650_Inicio2")]
-    partial class Inicio2
+    [Migration("20210713154446_Inicio")]
+    partial class Inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -256,7 +256,6 @@ namespace TheMoviePlug.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Imagem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Lancamento")

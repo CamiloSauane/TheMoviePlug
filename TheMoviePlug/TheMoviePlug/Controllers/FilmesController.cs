@@ -18,9 +18,10 @@ namespace TheMoviePlug.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _caminho;
 
-        public FilmesController(ApplicationDbContext context)
+        public FilmesController(ApplicationDbContext context, IWebHostEnvironment caminho)
         {
             _context = context;
+            _caminho = caminho;
         }
 
         // GET: Filmes
@@ -210,8 +211,6 @@ namespace TheMoviePlug.Controllers
                 _context.Filmes.Remove(filme);
                 await _context.SaveChangesAsync();
 
-                // NÃO ESQUECER DE REMOVER O FICHEIRO
-                // localização do armazenamento da imagem
                 string localizacao = _caminho.WebRootPath;
                 string localizacaoFicheiro = Path.Combine(localizacao, "Imagens", filme.Imagem);
                 if (System.IO.File.Exists(localizacaoFicheiro))
