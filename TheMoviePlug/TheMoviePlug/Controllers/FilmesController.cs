@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +16,7 @@ namespace TheMoviePlug.Controllers
     public class FilmesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _caminho;
 
         public FilmesController(ApplicationDbContext context)
         {
@@ -37,17 +41,19 @@ namespace TheMoviePlug.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                // return NotFound();
+                return RedirectToAction("Index");
             }
 
-            var filmes = await _context.Filmes
+            var filme = await _context.Filmes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (filmes == null)
+            if (filme == null)
             {
-                return NotFound();
+                // return NotFound();
+                return RedirectToAction("Index");
             }
 
-            return View(filmes);
+            return View(filme);
         }
 
         // GET: Filmes/Create
@@ -61,15 +67,67 @@ namespace TheMoviePlug.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Imagem,Categoria,Lancamento,Classificacao,Realizador,Elenco,Sinopse,Visibilidade")] Filmes filmes)
+        public async Task<IActionResult> Create([Bind("Titulo,Categoria,Lancamento,Classificacao,Realizador,Elenco,Sinopse,Visibilidade")] Filmes filme, IFormFile capaFilme)
         {
+
+            string nomeImagem = "";
+
+            if (capaFilme == null)
+            {
+                // não há ficheiro
+                // adicionar mensagem de erro
+                ModelState.AddModelError("", "Adicione, por favor, a imagem da capa do filme!");
+                // devolver o controlo à View
+                return View(filme);
+            }
+            else
+            {
+                // há ficheiro. Mas, será um ficheiro válido?
+                // https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+                if (capaFilme.ContentType == "image/jpeg" || capaFilme.ContentType == "image/png")
+                {
+                    // definir o novo nome da fotografia     
+                    nomeImagem = filme.Titulo;
+                    // determinar a extensão do nome da imagem
+                    string extensao = Path.GetExtension(capaFilme.FileName).ToLower();
+                    // agora, consigo ter o nome final do ficheiro
+                    nomeImagem = nomeImagem + extensao;
+                     
+                    // associar este ficheiro aos dados da Imagem do Filme
+                    filme.Imagem = nomeImagem;
+
+                    // localização do armazenamento da imagem
+                    string localizacaoFicheiro = _caminho.WebRootPath;
+                    nomeImagem = Path.Combine(localizacaoFicheiro, "Imagens", nomeImagem);
+                }
+                else
+                {
+                    // ficheiro não é válido
+                    // adicionar mensagem de erro
+                    ModelState.AddModelError("", "Só pode escolher uma imagem para a associar ao filme.");
+                    // devolver o controlo à View
+                    return View(filme);
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(filmes);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(filme);
+                    await _context.SaveChangesAsync();
+
+                    using var stream = new FileStream(nomeImagem, FileMode.Create);
+                    await capaFilme.CopyToAsync(stream);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch {
+                    ModelState.AddModelError("", "Ocorreu um erro na adição do Filme!");
+                }
+                
             }
-            return View(filmes);
+            return View(filme);
         }
 
         // GET: Filmes/Edit/5
@@ -146,9 +204,26 @@ namespace TheMoviePlug.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var filmes = await _context.Filmes.FindAsync(id);
-            _context.Filmes.Remove(filmes);
-            await _context.SaveChangesAsync();
+            var filme = await _context.Filmes.FindAsync(id);
+
+            try {
+                _context.Filmes.Remove(filme);
+                await _context.SaveChangesAsync();
+
+                // NÃO ESQUECER DE REMOVER O FICHEIRO
+                // localização do armazenamento da imagem
+                string localizacao = _caminho.WebRootPath;
+                string localizacaoFicheiro = Path.Combine(localizacao, "Imagens", filme.Imagem);
+                if (System.IO.File.Exists(localizacaoFicheiro))
+                {
+                    System.IO.File.Delete(localizacaoFicheiro);
+                }
+
+            }
+            catch (Exception) {
+                ModelState.AddModelError("", "Ocorreu um erro no processo da eliminação do Filme!");
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 
