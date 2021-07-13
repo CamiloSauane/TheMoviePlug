@@ -126,8 +126,8 @@ namespace TheMoviePlug.Controllers
                 catch {
                     ModelState.AddModelError("", "Ocorreu um erro na adição do Filme!");
                 }
-                
             }
+
             return View(filme);
         }
 
@@ -152,25 +152,70 @@ namespace TheMoviePlug.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Imagem,Categoria,Lancamento,Classificacao,Realizador,Elenco,Sinopse,Visibilidade")] Filmes filmes)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Imagem,Categoria,Lancamento,Classificacao,Realizador,Elenco,Sinopse,Visibilidade")] Filmes filme, IFormFile capaFilme)
         {
-            if (id != filmes.Id)
+            if (id != filme.Id)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
+
+
+            string nomeImagem = "";
+            string localizacao = _caminho.WebRootPath;
+
+            if (capaFilme != null)
+            {
+                if (capaFilme.ContentType == "image/jpeg" || capaFilme.ContentType == "image/png")
+                {
+                    // definir o novo nome da imagem     
+                    nomeImagem = filme.Titulo;
+                    // determinar a extensão do nome da imagem
+                    string extensao = Path.GetExtension(capaFilme.FileName).ToLower();
+                    // agora, consigo ter o nome final do ficheiro
+                    nomeImagem = nomeImagem + extensao;
+
+                    // associar este ficheiro aos dados da Imagem do Filme
+                    filme.Imagem = nomeImagem;
+
+                    // localização do armazenamento da imagem
+                    nomeImagem = Path.Combine(localizacao, "Imagens", nomeImagem);
+                }
+                else
+                {
+                    // ficheiro não é válido
+                    // adicionar mensagem de erro
+                    ModelState.AddModelError("", "Só pode escolher uma imagem para a associar ao filme.");
+                    // devolver o controlo à View
+                    return View(filme);
+                }
+            }
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(filmes);
+                    _context.Update(filme);
                     await _context.SaveChangesAsync();
+
+                    if (capaFilme != null)
+                    {
+                        string localizacaoFicheiro = Path.Combine(localizacao, "Imagens", filme.Imagem);
+                        if (System.IO.File.Exists(localizacaoFicheiro))
+                        {
+                            System.IO.File.Delete(localizacaoFicheiro);
+                        }
+
+                        using var stream = new FileStream(nomeImagem, FileMode.Create);
+                        await capaFilme.CopyToAsync(stream);
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FilmesExists(filmes.Id))
+                    if (!FilmesExists(filme.Id))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {
@@ -179,7 +224,7 @@ namespace TheMoviePlug.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(filmes);
+            return View(filme);
         }
 
         // GET: Filmes/Delete/5
@@ -187,14 +232,14 @@ namespace TheMoviePlug.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var filmes = await _context.Filmes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (filmes == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             return View(filmes);
