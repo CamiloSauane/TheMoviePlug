@@ -47,6 +47,7 @@ namespace TheMoviePlug.Controllers
             }
 
             var filme = await _context.Filmes
+                .Include(x => x.ListaDeLinks)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (filme == null)
             {

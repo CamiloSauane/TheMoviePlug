@@ -70,3 +70,34 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<!--para aparecer os links dos filmes que foram adicionados, o count aparecee 0-->
+<div>
+    @{ if (Model.ListaDeLinks.Count != 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            URL (Uniform Resource Locator)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListaDeLinks)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.URL)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h6>Este filme ainda não tem links.</h6>
+        }
+    }
+</div>
