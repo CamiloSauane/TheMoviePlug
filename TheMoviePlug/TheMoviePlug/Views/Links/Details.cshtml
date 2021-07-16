@@ -4,10 +4,25 @@
     ViewData["Title"] = "Details";
 }
 
+
+<style>
+    body {
+        background-color: rgb(0, 0, 0, 0.80);
+
+    }
+    dt, h1 {
+        color: #ffb727;
+    }
+
+    dd {
+        color: azure;
+    }
+    </style>
+
 <h1>Details</h1>
 
 <div>
-    <h4>Links</h4>
+    <br/>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -37,6 +52,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-outline-secondary" style="padding-bottom:5px" asp-action="Index">Back to List</a>
 </div>

@@ -4,100 +4,107 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Filmes</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Imagem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Imagem)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Lancamento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Lancamento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Classificacao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Classificacao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Realizador)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Realizador)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Elenco)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Elenco)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sinopse)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sinopse)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Visibilidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Visibilidade)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-
-<!--para aparecer os links dos filmes que foram adicionados, o count aparecee 0-->
-<div>
-    @{ if (Model.ListaDeLinks.Count != 0)
-        {
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            URL (Uniform Resource Locator)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.ListaDeLinks)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.URL)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <h6>Este filme ainda não tem links.</h6>
-        }
+<style>
+    body {
+        background-color: rgb(0, 0, 0, 0.80);
     }
-</div>
+
+    label {
+        
+        color: #ffb727;
+    }
+
+    p, td {
+        color: azure;
+    }
+</style>
+<body>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>@Html.DisplayNameFor(model => model.Titulo)</label>
+            <p>@Html.DisplayFor(model => model.Titulo)<p>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>@Html.DisplayNameFor(model => model.Imagem)</label>
+            <p>@Html.DisplayFor(model => model.Imagem)</p>
+        </div>
+        <div class="form-group col-md-4">
+            <label>@Html.DisplayNameFor(model => model.Categoria)</label>
+            <p>@Html.DisplayFor(model => model.Categoria)</p>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>@Html.DisplayNameFor(model => model.Lancamento)</label>
+            <p>@Html.DisplayFor(model => model.Lancamento)</p>
+        </div>
+        <div class="form-group col-md-4">
+            <label>@Html.DisplayNameFor(model => model.Classificacao)</label>
+            <p>@Html.DisplayFor(model => model.Classificacao)</p>
+        </div>
+        <div class="form-group col-md-2">
+            <label>@Html.DisplayNameFor(model => model.Realizador)</label>
+            <p>@Html.DisplayFor(model => model.Realizador)</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>@Html.DisplayNameFor(model => model.Elenco)</label>
+        <p>@Html.DisplayFor(model => model.Elenco)</p>
+    </div>
+
+    <div class="form-group">
+        <label>@Html.DisplayNameFor(model => model.Sinopse)</label>
+        <p>@Html.DisplayFor(model => model.Sinopse)</p>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>@Html.DisplayNameFor(model => model.Visibilidade)</label>
+            <p>@Html.DisplayFor(model => model.Visibilidade)<p>
+        </div>
+
+    </div>
+
+    <div>
+        <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-outline-secondary" style="padding-bottom:5px" asp-action="Index">Back to List</a>
+    </div>
+
+    <!--para aparecer os links dos filmes que foram adicionados, o count aparecee 0-->
+    <div>
+        @{ if (Model.ListaDeLinks.Count != 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="color:#ffb727">
+                                Links list:
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListaDeLinks)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.URL)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h6>Este filme ainda não tem links.</h6>
+            }
+        }
+    </div>
+</body>
