@@ -38,7 +38,6 @@ namespace TheMoviePlug.Models
         /// <summary>
         /// Endereço eletrónico do Utilizador
         /// </summary>
-        [Required]
         [EmailAddress]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
@@ -58,6 +57,14 @@ namespace TheMoviePlug.Models
         /// False - o admin desativou o Utilizador
         /// </summary>
         public Boolean Ativo { get; set; }
+
+
+        //******************************************************************************************************************************************
+        /// <summary>
+        /// Funciona como Chave Forasteira para ligar à tabela de autenticação
+        /// </summary>
+        public string UserName { get; set; }
+        //******************************************************************************************************************************************
 
 
         // #########################################################################

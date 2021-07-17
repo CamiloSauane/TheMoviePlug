@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,20 @@ using TheMoviePlug.Models;
 
 namespace TheMoviePlug.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+
+	/// <summary>
+	/// Classe para recolher os dados dos Utilizadores
+	/// </summary>
+	public class ApplicationUser : IdentityUser
+    {
+		/// <summary>
+		/// Recolhe a data de registo do respetivo Utilizador
+		/// </summary>
+        public DateTime DataRegisto { get; set; }
+
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -18,6 +32,11 @@ namespace TheMoviePlug.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<IdentityRole>().HasData(
+				new IdentityRole { Id = "r", Name = "Registado", NormalizedName = "REGISTADO" },
+				new IdentityRole { Id = "g", Name = "Gestor", NormalizedName = "GESTOR" }
+			);
 
 			modelBuilder.Entity<Utilizadores>().HasData(
 				new Utilizadores { Id = 1, Nome = "Jénifer Lalanda Alvelos Perreira", Email = "jen.alvelos12@fakemail.com", Telemovel = "916729407", Ativo = true },
