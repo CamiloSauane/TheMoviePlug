@@ -29,17 +29,23 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
+    <script>
+        function moverBaixo() {
+            window.scrollTo(0, 830);
+        }
+    </script>
 </head>
 
-    <body style="background-color:rgb(0, 0, 0, 0.94)">
 
+
+    <body style="background-color:rgb(0, 0, 0, 0.94)">
+        
         <!-- ======= Banner ======= -->
         <section id="hero">
             <div class="hero-container">
                 <h1>The Movie Plug</h1>
                 <h2>Watch whenever you want</h2>
-                <a href="#portfolio" class="btn-scroll scrollto" title="Scroll Down"><i class="bx bx-chevron-down"></i></a>
+                <a onClick="moverBaixo()" class="btn-scroll scrollto" title="Scroll Down"><i class="bx bx-chevron-down"></i></a>
             </div>
         </section>
         <!-- End Banner -->
