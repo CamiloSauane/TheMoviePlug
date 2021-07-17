@@ -5,38 +5,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>The Movie Plug</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
 
-    <title>The Movie Plug</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+        <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy" rel="stylesheet">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy" rel="stylesheet">
+        <!-- Vendor CSS Files -->
+        <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <script>
-        function moverBaixo() {
-            window.scrollTo(0, 830);
-        }
-    </script>
-</head>
-
-
+        <!-- Template Main CSS File -->
+        <link href="assets/css/style.css" rel="stylesheet">
+        <script>
+            function moverBaixo() {
+                window.scrollTo(0, 837);
+            }
+        </script>
+    </head>
 
     <body style="background-color:rgb(0, 0, 0, 0.94)">
         
@@ -52,51 +49,48 @@
 
         <main id="main">
 
-            <!-- ======= Movies - Images ======= -->
-            <section id="portfolio" class="portfolio">
-                <div class="container">
-                    <div class="section-title" id="tit">
-                        <span>Movies</span>
-                        <h2>Movies</h2>
-                        <p style="color:azure">Our available movies are here below in this list.</p>
-                    </div>
-
-                    <ul id="portfolio-flters" class="d-flex justify-content-center">
-                        <li data-filter="*" class="filter-active">All</li>
-                    </ul>
-
-                    <div class="row portfolio-container">
-                        @foreach (var item in Model)
-                        {
-
-                            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                                <div class="portfolio-img"><img src="./Imagens/@item.Imagem" class="img-fluid" alt="" style="width:380px ; height:490px ; border:1px solid #ffb727"></div>
-                                <div class="portfolio-info">
-
-                                    <h4>@item.Titulo</h4>
-                                    <p>@item.Sinopse</p>
-                                    <a href="./Imagens/@item.Imagem" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="@item.Titulo" style="position:relative ; padding-left: 150px"><i class="bx bx-plus"></i></a>
-                                    <a class="details-link" title="More Details" asp-area="" asp-controller="Filmes" asp-action="Details" asp-route-id="@item.Id" style="position:relative ; padding-left: 50px"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        }
-                    </div>
+        <!-- ======= Movies - Images ======= -->
+        <section id="portfolio" class="portfolio">
+            <div class="container">
+                <div class="section-title" id="tit">
+                    <span>Movies</span>
+                    <h2>Movies</h2>
+                    <p style="color:azure">Our available movies are here below in this list.</p>
                 </div>
-            </section>
-            <!-- End Movies - Images -->
+
+                <ul id="portfolio-flters" class="d-flex justify-content-center">
+                    <li data-filter="*" class="filter-active">All</li>
+                </ul>
+
+                <div class="row portfolio-container">
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                            <div class="portfolio-img"><img src="./Imagens/@item.Imagem" class="img-fluid" alt="" style="width:380px ; height:490px ; border:1px solid #ffb727"></div>
+                            <div class="portfolio-info">
+
+                                <h4>@item.Titulo</h4>
+                                <p>@item.Sinopse</p>
+                                <a href="./Imagens/@item.Imagem" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="@item.Titulo" style="position:relative ; padding-left: 150px"><i class="bx bx-plus"></i></a>
+                                <a class="details-link" title="More Details" asp-area="" asp-controller="Filmes" asp-action="Details" asp-route-id="@item.Id" style="position:relative ; padding-left: 50px"><i class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+        <!-- End Movies - Images -->
 
         </main>
         <!-- End #main -->
 
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-        <!-- Vendor JS Files -->
-
-
+        <!-- JS Files -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
         <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
@@ -104,10 +98,7 @@
         <script src="assets/vendor/purecounter/purecounter.js"></script>
         <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
         <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-
         <!-- Template Main JS File -->
         <script src="assets/js/main.js"></script>
-
-</body>
-
+    </body>
 </html>
