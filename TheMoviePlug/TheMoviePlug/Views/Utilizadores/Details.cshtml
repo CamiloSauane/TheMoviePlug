@@ -4,70 +4,161 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Utilizadores</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telemovel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telemovel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ativo)
-        </dd>
-    </dl>
-</div>
+<style>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    body {
+        background-color: rgb(0, 0, 0, 0.80);
+    }
 
-<div>
-    @{if (Model.ListaFilmesFav.Count != 0)
+    th, dt {
+        color: #ffb727;
+        background-color: #111111;
+    }
+
+    td, dd {
+        color: azure;
+        vertical-align: middle;
+    }
+
+    table {
+        text-align: center;
+        background-color: #222222;
+        border: 2px solid #ffb727;
+    }
+
+    tr:nth-child(even) {
+        background-color: #333333;
+    }
+
+    hr {
+        background-color: white;
+    }
+</style>
+
+
+<body>
+    @{ if (User.IsInRole("Gestor") || Model.Email == User.Identity.Name.ToLower())
         {
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Título
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.ListaFilmesFav)
+            <h1>Detalhes do Utilizador</h1>
+            <hr />
+
+            <div>
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Nome)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Telemovel)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Telemovel)
+                    </dd>
+                    @if (User.IsInRole("Gestor"))
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Titulo)
-                            </td>
-                        </tr>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Ativo)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Ativo)
+                        </dd>
                     }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <h6>Este utilizador ainda não tem favoritos.</h6>
+                </dl>
+            </div>
+
+            <div>
+                <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Utilizadores'</a>
+            </div>
+
+            <br />
+            <hr />
+            <br />
+
+            <div>
+                @{if (Model.ListaFavoritos.Count != 0)
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Capa
+                                    </th>
+                                    <th>
+                                        Título
+                                    </th>
+                                    <th>
+                                        Categoria
+                                    </th>
+                                    <th>
+                                        Lançamento
+                                    </th>
+                                    <th>
+                                        Classificação
+                                    </th>
+                                    <th>
+                                        Sinopse
+                                    </th>
+                                    @if (User.IsInRole("Gestor"))
+                                    {
+                                        <th>
+                                            Visibilidade
+                                        </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ListaFavoritos)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Filme.Imagem)"
+                                                 style="border: 2px solid white"
+                                                 width="120"
+                                                 alt="Capa do filme @Html.DisplayFor(modelItem => item.Filme.Titulo)"
+                                                 title="@Html.DisplayFor(modelItem => item.Filme.Titulo)" />
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Filme.Titulo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Filme.Categoria)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Filme.Lancamento.Year)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Filme.Classificacao)
+                                        </td>
+                                        <td style="text-align:justify">
+                                            @Html.DisplayFor(modelItem => item.Filme.Sinopse)
+                                        </td>
+                                        @if (User.IsInRole("Gestor"))
+                                        {
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Filme.Visibilidade)
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <h6 style="text-align: center">Este utilizador ainda não tem favoritos.</h6>
+                    }
+                }
+            </div>
         }
     }
-</div>
+</body>

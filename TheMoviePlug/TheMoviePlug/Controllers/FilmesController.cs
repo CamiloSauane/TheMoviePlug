@@ -30,13 +30,6 @@ namespace TheMoviePlug.Controllers
         // GET: Filmes
         public async Task<IActionResult> Index()
         {
-            //Filmes filme = await _context.Filmes.FirstOrDefaultAsync(f => f.Id == 1);
-            //Utilizadores utilizador = await _context.Utilizadores.FirstOrDefaultAsync(u => u.Id == 1);
-            //utilizador.ListaFilmesFav.Add(filme);
-            //filme.ListaUtilizadoresFav.Add(utilizador);
-            //_context.Utilizadores.Update(utilizador);
-            //_context.Filmes.Update(filme);
-            //await _context.SaveChangesAsync();
             return View(await _context.Filmes.ToListAsync());
         }
 
@@ -51,11 +44,31 @@ namespace TheMoviePlug.Controllers
 
             var filme = await _context.Filmes
                 .Include(x => x.ListaDeLinks)
+                .Include(x => x.ListaDeFavoritos)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (filme == null)
             {
                 // return NotFound();
                 return RedirectToAction("Index");
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+                // esta variável vai ter o valor do username do utilizador
+                var utilizador = await _context.Utilizadores.Where(u => u.UserName == _userManager.GetUserId(User)).FirstOrDefaultAsync();
+
+                // vai procurar pelo "Gosto" do User
+                var favorito = await _context.Favoritos.Where(f => f.FilmeFK == id && f.UtilizadorFK == utilizador.Id).FirstOrDefaultAsync();
+
+                if (favorito == null)
+                {
+                    ViewBag.Favorito = false;
+                }
+                else
+                {
+                    ViewBag.Favorito = true;
+                }
             }
 
             return View(filme);
@@ -117,22 +130,26 @@ namespace TheMoviePlug.Controllers
 
             var filme = _context.Filmes.Where(f => f.Id == filmeId).FirstOrDefault();
 
+            // Cria um novo Link com os atributos definidos
+            var favorito = new Favoritos
+            {
+                UtilizadorFK = utilizador.Id,
+                FilmeFK = filme.Id
+            };
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    utilizador.ListaFilmesFav.Add(filme);
-                    filme.ListaUtilizadoresFav.Add(utilizador);
-                    _context.Utilizadores.Update(utilizador);
-                    _context.Filmes.Update(filme);
+                    // Adicionar o Link à base de dados
+                    _context.Add(favorito);
+                    // Guarda as alterações feitas na base de dados
                     await _context.SaveChangesAsync();
-
                     return RedirectToAction(nameof(Details), new { id = filmeId });
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError("", "Ocorreu um erro na adição do Link!");
+                    ModelState.AddModelError("", "Ocorreu um erro na adição do Favorito!");
                 }
             }
 
@@ -144,10 +161,12 @@ namespace TheMoviePlug.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Titulo,Categoria,Lancamento,Classificacao,Realizador,Elenco,Sinopse,Visibilidade")] Filmes filme, IFormFile capaFilme)
+        public async Task<IActionResult> Create([Bind("Titulo,Categoria,Lancamento,Classificacao,Realizador,Elenco,Sinopse")] Filmes filme, IFormFile capaFilme)
         {
 
             string nomeImagem = "";
+
+            filme.Visibilidade = true;
 
             if (capaFilme == null)
             {
@@ -186,6 +205,7 @@ namespace TheMoviePlug.Controllers
                     return View(filme);
                 }
             }
+
 
             if (ModelState.IsValid)
             {

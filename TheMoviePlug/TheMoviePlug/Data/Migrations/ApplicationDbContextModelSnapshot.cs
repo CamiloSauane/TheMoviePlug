@@ -16,23 +16,8 @@ namespace TheMoviePlug.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("FilmesUtilizadores", b =>
-                {
-                    b.Property<int>("ListaFilmesFavId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ListaUtilizadoresFavId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ListaFilmesFavId", "ListaUtilizadoresFavId");
-
-                    b.HasIndex("ListaUtilizadoresFavId");
-
-                    b.ToTable("FilmesUtilizadores");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -64,14 +49,14 @@ namespace TheMoviePlug.Data.Migrations
                         new
                         {
                             Id = "r",
-                            ConcurrencyStamp = "7ba31b60-81b6-41f3-9d7e-69a022674847",
+                            ConcurrencyStamp = "6b6dc8f0-1b07-4753-8bac-0f0007abb9c0",
                             Name = "Registado",
                             NormalizedName = "REGISTADO"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "853a1a51-4b39-4054-b438-dbe54c00f988",
+                            ConcurrencyStamp = "84fa8f13-988a-4e7c-906c-d3eb6fc62746",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -251,6 +236,450 @@ namespace TheMoviePlug.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("TheMoviePlug.Models.Favoritos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FilmeFK")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UtilizadorFK")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilmeFK");
+
+                    b.HasIndex("UtilizadorFK");
+
+                    b.ToTable("Favoritos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FilmeFK = 1,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FilmeFK = 2,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FilmeFK = 3,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FilmeFK = 4,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FilmeFK = 5,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FilmeFK = 6,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FilmeFK = 7,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FilmeFK = 8,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FilmeFK = 9,
+                            UtilizadorFK = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FilmeFK = 4,
+                            UtilizadorFK = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            FilmeFK = 9,
+                            UtilizadorFK = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            FilmeFK = 19,
+                            UtilizadorFK = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            FilmeFK = 5,
+                            UtilizadorFK = 3
+                        },
+                        new
+                        {
+                            Id = 14,
+                            FilmeFK = 10,
+                            UtilizadorFK = 6
+                        },
+                        new
+                        {
+                            Id = 15,
+                            FilmeFK = 11,
+                            UtilizadorFK = 6
+                        },
+                        new
+                        {
+                            Id = 16,
+                            FilmeFK = 12,
+                            UtilizadorFK = 6
+                        },
+                        new
+                        {
+                            Id = 17,
+                            FilmeFK = 13,
+                            UtilizadorFK = 6
+                        },
+                        new
+                        {
+                            Id = 18,
+                            FilmeFK = 1,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 19,
+                            FilmeFK = 6,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 20,
+                            FilmeFK = 7,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 21,
+                            FilmeFK = 8,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 22,
+                            FilmeFK = 13,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 23,
+                            FilmeFK = 17,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 24,
+                            FilmeFK = 18,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 25,
+                            FilmeFK = 19,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 26,
+                            FilmeFK = 20,
+                            UtilizadorFK = 13
+                        },
+                        new
+                        {
+                            Id = 27,
+                            FilmeFK = 2,
+                            UtilizadorFK = 14
+                        },
+                        new
+                        {
+                            Id = 28,
+                            FilmeFK = 3,
+                            UtilizadorFK = 14
+                        },
+                        new
+                        {
+                            Id = 29,
+                            FilmeFK = 9,
+                            UtilizadorFK = 14
+                        },
+                        new
+                        {
+                            Id = 30,
+                            FilmeFK = 17,
+                            UtilizadorFK = 15
+                        },
+                        new
+                        {
+                            Id = 31,
+                            FilmeFK = 19,
+                            UtilizadorFK = 15
+                        },
+                        new
+                        {
+                            Id = 32,
+                            FilmeFK = 21,
+                            UtilizadorFK = 15
+                        },
+                        new
+                        {
+                            Id = 33,
+                            FilmeFK = 2,
+                            UtilizadorFK = 18
+                        },
+                        new
+                        {
+                            Id = 34,
+                            FilmeFK = 14,
+                            UtilizadorFK = 19
+                        },
+                        new
+                        {
+                            Id = 35,
+                            FilmeFK = 14,
+                            UtilizadorFK = 20
+                        },
+                        new
+                        {
+                            Id = 36,
+                            FilmeFK = 15,
+                            UtilizadorFK = 21
+                        },
+                        new
+                        {
+                            Id = 37,
+                            FilmeFK = 16,
+                            UtilizadorFK = 21
+                        },
+                        new
+                        {
+                            Id = 38,
+                            FilmeFK = 17,
+                            UtilizadorFK = 21
+                        },
+                        new
+                        {
+                            Id = 39,
+                            FilmeFK = 18,
+                            UtilizadorFK = 21
+                        },
+                        new
+                        {
+                            Id = 40,
+                            FilmeFK = 19,
+                            UtilizadorFK = 21
+                        },
+                        new
+                        {
+                            Id = 41,
+                            FilmeFK = 20,
+                            UtilizadorFK = 21
+                        },
+                        new
+                        {
+                            Id = 42,
+                            FilmeFK = 21,
+                            UtilizadorFK = 21
+                        },
+                        new
+                        {
+                            Id = 43,
+                            FilmeFK = 1,
+                            UtilizadorFK = 26
+                        },
+                        new
+                        {
+                            Id = 44,
+                            FilmeFK = 1,
+                            UtilizadorFK = 27
+                        },
+                        new
+                        {
+                            Id = 45,
+                            FilmeFK = 21,
+                            UtilizadorFK = 27
+                        },
+                        new
+                        {
+                            Id = 46,
+                            FilmeFK = 1,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 47,
+                            FilmeFK = 2,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 48,
+                            FilmeFK = 3,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 49,
+                            FilmeFK = 4,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 50,
+                            FilmeFK = 5,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 51,
+                            FilmeFK = 6,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 52,
+                            FilmeFK = 7,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 53,
+                            FilmeFK = 8,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 54,
+                            FilmeFK = 9,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 55,
+                            FilmeFK = 10,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 56,
+                            FilmeFK = 11,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 57,
+                            FilmeFK = 12,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 58,
+                            FilmeFK = 13,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 59,
+                            FilmeFK = 20,
+                            UtilizadorFK = 28
+                        },
+                        new
+                        {
+                            Id = 60,
+                            FilmeFK = 4,
+                            UtilizadorFK = 29
+                        },
+                        new
+                        {
+                            Id = 61,
+                            FilmeFK = 5,
+                            UtilizadorFK = 29
+                        },
+                        new
+                        {
+                            Id = 62,
+                            FilmeFK = 6,
+                            UtilizadorFK = 29
+                        },
+                        new
+                        {
+                            Id = 63,
+                            FilmeFK = 7,
+                            UtilizadorFK = 29
+                        },
+                        new
+                        {
+                            Id = 64,
+                            FilmeFK = 8,
+                            UtilizadorFK = 30
+                        },
+                        new
+                        {
+                            Id = 65,
+                            FilmeFK = 9,
+                            UtilizadorFK = 31
+                        },
+                        new
+                        {
+                            Id = 66,
+                            FilmeFK = 10,
+                            UtilizadorFK = 31
+                        },
+                        new
+                        {
+                            Id = 67,
+                            FilmeFK = 11,
+                            UtilizadorFK = 31
+                        },
+                        new
+                        {
+                            Id = 68,
+                            FilmeFK = 12,
+                            UtilizadorFK = 31
+                        },
+                        new
+                        {
+                            Id = 69,
+                            FilmeFK = 13,
+                            UtilizadorFK = 31
+                        },
+                        new
+                        {
+                            Id = 70,
+                            FilmeFK = 20,
+                            UtilizadorFK = 31
+                        });
                 });
 
             modelBuilder.Entity("TheMoviePlug.Models.Filmes", b =>
@@ -1270,21 +1699,6 @@ namespace TheMoviePlug.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FilmesUtilizadores", b =>
-                {
-                    b.HasOne("TheMoviePlug.Models.Filmes", null)
-                        .WithMany()
-                        .HasForeignKey("ListaFilmesFavId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TheMoviePlug.Models.Utilizadores", null)
-                        .WithMany()
-                        .HasForeignKey("ListaUtilizadoresFavId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1336,6 +1750,25 @@ namespace TheMoviePlug.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TheMoviePlug.Models.Favoritos", b =>
+                {
+                    b.HasOne("TheMoviePlug.Models.Filmes", "Filme")
+                        .WithMany("ListaDeFavoritos")
+                        .HasForeignKey("FilmeFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TheMoviePlug.Models.Utilizadores", "Utilizador")
+                        .WithMany("ListaFavoritos")
+                        .HasForeignKey("UtilizadorFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Filme");
+
+                    b.Navigation("Utilizador");
+                });
+
             modelBuilder.Entity("TheMoviePlug.Models.Links", b =>
                 {
                     b.HasOne("TheMoviePlug.Models.Filmes", "Filme")
@@ -1357,11 +1790,15 @@ namespace TheMoviePlug.Data.Migrations
 
             modelBuilder.Entity("TheMoviePlug.Models.Filmes", b =>
                 {
+                    b.Navigation("ListaDeFavoritos");
+
                     b.Navigation("ListaDeLinks");
                 });
 
             modelBuilder.Entity("TheMoviePlug.Models.Utilizadores", b =>
                 {
+                    b.Navigation("ListaFavoritos");
+
                     b.Navigation("ListaLinks");
                 });
 #pragma warning restore 612, 618

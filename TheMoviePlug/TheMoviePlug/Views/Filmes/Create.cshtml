@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Create";
 }
+
+
 <style>
     body {
         background-color: rgb(0, 0, 0, 0.80);
@@ -11,72 +13,79 @@
     label {
         color: #ffb727;
     }
-
 </style>
 
-    <h2 style="color:azure ; position:center ; text-align:center">Create</h2>
+<body>
+    @{ if (User.IsInRole("Gestor"))
+        {
+            <h2 style="color:azure ; position:center ; text-align:center">Create</h2>
 
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create" method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Titulo" class="control-label"></label>
-                    <input asp-for="Titulo" class="form-control" />
-                    <span asp-validation-for="Titulo" class="text-danger"></span>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Titulo" class="control-label"></label>
+                            <input asp-for="Titulo" class="form-control" />
+                            <span asp-validation-for="Titulo" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Imagem" class="control-label"></label>
+                            <input type="file" name="capaFilme" accept=".jpg,.jpeg,.png" style="color:blue;" />
+                            <span asp-validation-for="Imagem" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Categoria" class="control-label"></label>
+                            <input asp-for="Categoria" class="form-control" />
+                            <span asp-validation-for="Categoria" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Lancamento" class="control-label"></label>
+                            <input type="date" asp-for="Lancamento" class="form-control" />
+                            <span asp-validation-for="Lancamento" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Classificacao" class="control-label"></label>
+                            <input asp-for="Classificacao" class="form-control" />
+                            <span asp-validation-for="Classificacao" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Realizador" class="control-label"></label>
+                            <input asp-for="Realizador" class="form-control" />
+                            <span asp-validation-for="Realizador" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Elenco" class="control-label"></label>
+                            <input asp-for="Elenco" class="form-control" />
+                            <span asp-validation-for="Elenco" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Sinopse" class="control-label"></label>
+                            <textarea asp-for="Sinopse" class="form-control" ></textarea>
+                            <span asp-validation-for="Sinopse" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Criar" class="btn btn-primary" />
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Imagem" class="control-label"></label>
-                    <input type="file" name="capaFilme" accept=".jpg,.jpeg,.png" style="color:blue;" />
-                    <span asp-validation-for="Imagem" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Categoria" class="control-label"></label>
-                    <input asp-for="Categoria" class="form-control" />
-                    <span asp-validation-for="Categoria" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Lancamento" class="control-label"></label>
-                    <input type="date" asp-for="Lancamento" class="form-control" />
-                    <span asp-validation-for="Lancamento" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Classificacao" class="control-label"></label>
-                    <input asp-for="Classificacao" class="form-control" />
-                    <span asp-validation-for="Classificacao" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Realizador" class="control-label"></label>
-                    <input asp-for="Realizador" class="form-control" />
-                    <span asp-validation-for="Realizador" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Elenco" class="control-label"></label>
-                    <input asp-for="Elenco" class="form-control" />
-                    <span asp-validation-for="Elenco" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Sinopse" class="control-label"></label>
-                    <input asp-for="Sinopse" class="form-control" />
-                    <span asp-validation-for="Sinopse" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Visibilidade" /> @Html.DisplayNameFor(model => model.Visibilidade)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
+            </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        }
+        else
+        {
+            <h2 style="text-align: center; color:red">Não é possível criar um Filme pois é preciso autenticar-se como Gestor!</h2>
+            <hr />
+            <h4 style="text-align:center">Para aceder a este conteúdo precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+        }
     }
+</body>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -33,14 +33,14 @@ namespace TheMoviePlug.Controllers
                 return NotFound();
             }
 
-            var utilizadores = await _context.Utilizadores.Include(u => u.ListaFilmesFav)
+            var utilizadores = await _context.Utilizadores.Include(u => u.ListaFavoritos)
+                .ThenInclude(f => f.Filme)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (utilizadores == null)
             {
                 return NotFound();
             }
 
-            
 
             return View(utilizadores);
         }

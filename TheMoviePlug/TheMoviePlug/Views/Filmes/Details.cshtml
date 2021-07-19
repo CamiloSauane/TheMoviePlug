@@ -53,7 +53,7 @@
 <body>
     <hr />
     <div style="text-align:center; align-items: center;">
-            <h1>@Html.DisplayFor(model => model.Titulo)</h1>
+        <h1>@Html.DisplayFor(model => model.Titulo)</h1>
     </div>
     <hr />
 
@@ -111,6 +111,7 @@
             }
 
         </dl>
+        <br />
 
         <div style="text-align:center">
             @{ if (User.IsInRole("Gestor"))
@@ -119,26 +120,24 @@
                 }
 
             }
-            <a class="btn btn-outline-secondary" style="padding-bottom:5px" asp-action="Index">Voltar à Lista de Filmes</a>
+            <a class="btn btn-outline-secondary" asp-action="Index">Voltar à Lista de Filmes</a>
 
-            @*
-        @{ if (User.IsInRole("Gestor"))
-            {
-                if (Model.ListaUtilizadoresFav.Contains(User.Identity.))
+            @{ if (User.Identity.IsAuthenticated)
                 {
-                    <form asp-action="CreateLink">
-                        <input type="hidden" name="filmeId" value="@Model.Id" />
-                        <input type="submit" value="Adicionar aos Favoritos" class="btn btn-primary" />
-                    </form>
-                }
-                else
-                {
+                    if (ViewBag.Favorito == false)
+                    {
+                        <form asp-action="AddFavorito" style="margin-top:10px">
+                            <input type="hidden" name="filmeId" value="@Model.Id" />
+                            <input type="submit" value="Adicionar aos Favoritos" class="btn btn-primary" />
+                        </form>
+                    }
+                    else
+                    {
+                        <input type="submit" value="Adicionado aos Favoritos" class="btn btn-primary" style="background-color:green" disabled/>
+                    }
 
                 }
-
             }
-        }
-            *@
 
         </div>
 
