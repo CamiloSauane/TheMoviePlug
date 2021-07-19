@@ -4,50 +4,88 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telemovel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ativo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telemovel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ativo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<style>
+
+    body {
+        background-color: rgb(0, 0, 0, 0.80);
+    }
+
+    th {
+        color: #ffb727;
+        background-color: #111111;
+    }
+
+    td {
+        color: azure;
+        vertical-align: middle;
+    }
+
+    table {
+        text-align: center;
+        background-color: #222222;
+        border: 2px solid #ffb727;
+    }
+
+    tr:nth-child(even) {
+        background-color: #333333;
+    }
+</style>
+
+<body>
+    @{ if (User.IsInRole("Gestor"))
+        {
+            <h1>Lista de Utilizadores</h1>
+            <hr />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Telemovel)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Ativo)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telemovel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ativo)
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-primary" style="width:110px" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                            <a class="btn btn-outline-warning" style="width:110px ; margin-top:10px; margin-bottom:10px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h2 style="text-align: center; color:red">Não é possível aceder à "Lista de Utilizadores" pois é preciso autenticar-se como Gestor!</h2>
+            <hr />
+            <h4 style="text-align:center">Para aceder a este conteúdo precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+        }
+    }
+</body>

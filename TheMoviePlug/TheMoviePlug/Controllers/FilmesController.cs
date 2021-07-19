@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,13 @@ namespace TheMoviePlug.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _caminho;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public FilmesController(ApplicationDbContext context, IWebHostEnvironment caminho)
+        public FilmesController(ApplicationDbContext context, IWebHostEnvironment caminho, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _caminho = caminho;
+            _userManager = userManager;
         }
 
         // GET: Filmes
@@ -61,6 +64,78 @@ namespace TheMoviePlug.Controllers
         // GET: Filmes/Create
         public IActionResult Create()
         {
+            return View();
+        }
+
+        // POST: Filmes/CreateLink
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateLink(int filmeId, string url)
+        {
+            // Guarda o Utilizador que está a adicionar o Link 
+            var utilizador = _context.Utilizadores.Where(u => u.UserName == _userManager.GetUserId(User)).FirstOrDefault();
+
+            // Cria um novo Link com os atributos definidos
+            var link = new Links
+            {
+                URL = url,
+                Visivel = true,
+                UtilizadorFK = utilizador.Id,
+                FilmeFK = filmeId
+            };
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Adicionar o Link à base de dados
+                    _context.Add(link);
+                    // Guarda as alterações feitas na base de dados
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { id = filmeId });
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Ocorreu um erro na adição do Link!");
+                }
+            }
+
+            return View();
+        }
+
+        // POST: Filmes/CreateLink
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddFavorito(int filmeId)
+        {
+            // Guarda o Utilizador que está a adicionar o Link 
+            var utilizador = _context.Utilizadores.Where(u => u.UserName == _userManager.GetUserId(User)).FirstOrDefault();
+
+            var filme = _context.Filmes.Where(f => f.Id == filmeId).FirstOrDefault();
+
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    utilizador.ListaFilmesFav.Add(filme);
+                    filme.ListaUtilizadoresFav.Add(utilizador);
+                    _context.Utilizadores.Update(utilizador);
+                    _context.Filmes.Update(filme);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Details), new { id = filmeId });
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Ocorreu um erro na adição do Link!");
+                }
+            }
+
             return View();
         }
 
@@ -140,12 +215,12 @@ namespace TheMoviePlug.Controllers
                 return NotFound();
             }
 
-            var filmes = await _context.Filmes.FindAsync(id);
-            if (filmes == null)
+            var filme = await _context.Filmes.FindAsync(id);
+            if (filme == null)
             {
                 return NotFound();
             }
-            return View(filmes);
+            return View(filme);
         }
 
         // POST: Filmes/Edit/5

@@ -4,6 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
+
 <style>
 
     body {
@@ -12,92 +13,109 @@
 
     th {
         color: #ffb727;
+        background-color: #111111;
     }
-    td{
-        color:azure;
+    td {
+        color: azure;
+        vertical-align: middle;
+    }
+    table {
+        text-align: center;
+        background-color: #222222;
+        border: 2px solid #ffb727;
+    }
+    tr:nth-child(even) {
+        background-color: #333333;
     }
 
 </style>
  
+
 <body>
+    <h1>Lista de Filmes</h1>
+    <hr />
 
     <p>
-        <a asp-action="Create">Add a new movie</a>
+        <a class="btn btn-outline-success" asp-action="Create">Adicionar Filme</a>
     </p>
+
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Titulo)
+                    Capa
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Imagem)
+                    @Html.DisplayNameFor(model => model.Titulo)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Categoria)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Lancamento)
+                    Lançamento
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Classificacao)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Realizador)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Elenco)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Sinopse)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Visibilidade)
-                </th>
+                @{ if (User.IsInRole("Gestor"))
+                    {
+                        <th>
+                            @Html.DisplayNameFor(model => model.Visibilidade)
+                        </th>
+                    }
+                }
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Titulo)
-                    </td>
-                    <td>
-                        <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Imagem)"
-                             width="75"
-                             alt="Capa do filme @Html.DisplayFor(modelItem => item.Titulo)"
-                             title="@Html.DisplayFor(modelItem => item.Titulo)" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Categoria)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Lancamento)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Classificacao)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Realizador)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Elenco)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Sinopse)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Visibilidade)
-                    </td>
-                    <td>
+            @{ foreach (var item in Model)
+                {
+                    if (User.IsInRole("Gestor") || item.Visibilidade)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Imagem)"
+                                     style="border: 2px solid white"
+                                     width="120"
+                                     alt="Capa do filme @Html.DisplayFor(modelItem => item.Titulo)"
+                                     title="@Html.DisplayFor(modelItem => item.Titulo)" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Titulo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Categoria)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lancamento.Year)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Classificacao)
+                            </td>
+                            <td style="text-align:justify">
+                                @Html.DisplayFor(modelItem => item.Sinopse)
+                            </td>
+                            @if (User.IsInRole("Gestor"))
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Visibilidade)
+                                </td>
+                            }
 
-                        <a class="btn btn-outline-primary" style="width:110px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a> 
-                        <a class="btn btn-outline-warning" style="width:110px ; margin-top:10px; margin-bottom:10px" asp-action="Edit" asp-route-id="@item.Id">Editar</a> 
-                        <a class="btn btn-outline-danger" style="width:110px" asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
-                    </td>
-                </tr>
+                        <td>
+                            <a class="btn btn-outline-primary" style="width:110px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                            @if (User.IsInRole("Gestor"))
+                            {
+                                <a class="btn btn-outline-warning" style="width:110px ; margin-top:10px; margin-bottom:10px" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                                <a class="btn btn-outline-danger" style="width:110px" asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
+                            }
+                        </td>
+                        </tr>
+                    }
+                }
             }
         </tbody>
     </table>

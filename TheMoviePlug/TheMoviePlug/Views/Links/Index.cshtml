@@ -3,66 +3,122 @@
 @{
     ViewData["Title"] = "Index";
 }
+
+
 <style>
+
     body {
         background-color: rgb(0, 0, 0, 0.80);
     }
 
     th {
         color: #ffb727;
+        background-color: #111111;
     }
 
     td {
         color: azure;
+        vertical-align: middle;
     }
+
+    table {
+        text-align: center;
+        background-color: #222222;
+        border: 2px solid #ffb727;
+    }
+
+    tr:nth-child(even) {
+        background-color: #333333;
+    }
+
 </style>
 
-<body>
 
-    <p>
-        <a asp-action="Create">Add new Link</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.URL)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Visivel)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Utilizador)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Filme)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.URL)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Visivel)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Utilizador.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Filme.Categoria)
-                    </td>
-                    <td>
-                        <a class="btn btn-outline-primary" style="width:110px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                        <a class="btn btn-outline-warning" style="width:110px ; margin-top:10px; margin-bottom:10px" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                        <a class="btn btn-outline-danger" style="width:110px" asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<body>
+    @{ if (User.Identity.IsAuthenticated)
+        {
+            <h1>Lista de Filmes</h1>
+            <hr />
+
+            <p>
+                <a class="btn btn-outline-success" asp-action="Create">Adicionar Link</a>
+            </p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Filme)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.URL)
+                        </th>
+                        @{ if (User.IsInRole("Gestor"))
+                            {
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Utilizador)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Visivel)
+                                </th>
+                            }
+                        }
+                        <th>
+                            Link ID
+                        </th>
+                        @{ if (User.IsInRole("Gestor"))
+                            {
+                                <th></th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ foreach (var item in Model)
+                        {
+                            if (User.IsInRole("Gestor") || item.Visivel)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Filme.Titulo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.URL)
+                                    </td>
+                                    @if (User.IsInRole("Gestor"))
+                                    {
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Utilizador.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Visivel)
+                                        </td>
+                                    }
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    @if (User.IsInRole("Gestor"))
+                                    {
+                                        <td>
+                                            <a class="btn btn-outline-primary" style="width:110px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                                            <a class="btn btn-outline-warning" style="width:110px ; margin-top:10px; margin-bottom:10px" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                                            <a class="btn btn-outline-danger" style="width:110px" asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+
+
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h2 style="text-align:center; color:red">Não é possível aceder à "Lista de Links" pois você não está autenticado!</h2>
+            <hr />
+            <h4 style="text-align:center">Se já tiver uma conta criada aceda à página de "Entrar", e se pretende criar uma conta clique em "Registar" no canto superior direito.</h4>
+        }
+    }
 </body>

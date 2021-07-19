@@ -92,7 +92,7 @@ namespace TheMoviePlug.Areas.Identity.Pages.Account
             // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, EmailConfirmed = false, LockoutEnabled = false, LockoutEnd = new DateTime(DateTime.Now.Year+10, 1, 1), DataRegisto = DateTime.Now };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, EmailConfirmed = true, LockoutEnabled = true, DataRegisto = DateTime.Now };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
