@@ -51,173 +51,187 @@
 </style>
 
 <body>
-    <hr />
-    <div style="text-align:center; align-items: center;">
-        <h1>@Html.DisplayFor(model => model.Titulo)</h1>
-    </div>
-    <hr />
 
-    <div style="height: 580px; align-items: center; vertical-align: middle">
+    @{ if (Model.Visibilidade)
+        {
 
-        <div>
-            <img src="~/Imagens/@Html.DisplayFor(model => model.Imagem)"
-                 style="border: 2px solid white;  float:left"
-                 width="380" height="565"
-                 alt="Capa do filme @Html.DisplayFor(model => model.Imagem)"
-                 title="@Html.DisplayFor(model => model.Imagem)" />
-        </div>
+            <hr />
+            <div style="text-align:center; align-items: center;">
+                <h1>@Html.DisplayFor(model => model.Titulo)</h1>
+            </div>
+            <hr />
 
-        <dl class="row">
-            <dt class="col-sm-2" style="object-fit: fill">
-                @Html.DisplayNameFor(model => model.Categoria)
-            </dt>
-            <dd class="col-sm-10" style="object-fit: fill">
-                @Html.DisplayFor(model => model.Categoria)
-            </dd>
-            <dt class="col-sm-2" style="object-fit: fill">
-                @Html.DisplayNameFor(model => model.Classificacao)
-            </dt>
-            <dd class="col-sm-10" style="object-fit: fill">
-                @Html.DisplayFor(model => model.Classificacao)
-            </dd>
-            <dt class="col-sm-2" style="object-fit: fill">
-                @Html.DisplayNameFor(model => model.Realizador)
-            </dt>
-            <dd class="col-sm-10" style="object-fit: fill">
-                @Html.DisplayFor(model => model.Realizador)
-            </dd>
-            <dt class="col-sm-2" style="object-fit: fill">
-                @Html.DisplayNameFor(model => model.Elenco)
-            </dt>
-            <dd class="col-sm-10" style="object-fit: fill">
-                @Html.DisplayFor(model => model.Elenco)
-            </dd>
-            <dt class="col-sm-2" style="object-fit: fill">
-                @Html.DisplayNameFor(model => model.Sinopse)
-            </dt>
-            <dd class="col-sm-10" style="object-fit: fill; text-align:justify">
-                @Html.DisplayFor(model => model.Sinopse)
-            </dd>
+            <div style="height: 580px; align-items: center; vertical-align: middle">
 
-            @{ if (User.IsInRole("Gestor"))
-                {
+                <div>
+                    <img src="~/Imagens/@Html.DisplayFor(model => model.Imagem)"
+                         style="border: 2px solid white;  float:left"
+                         width="380" height="565"
+                         alt="Capa do filme @Html.DisplayFor(model => model.Imagem)"
+                         title="@Html.DisplayFor(model => model.Imagem)" />
+                </div>
+
+                <dl class="row">
                     <dt class="col-sm-2" style="object-fit: fill">
-                        @Html.DisplayNameFor(model => model.Visibilidade)
+                        @Html.DisplayNameFor(model => model.Categoria)
                     </dt>
                     <dd class="col-sm-10" style="object-fit: fill">
-                        @Html.DisplayFor(model => model.Visibilidade)
+                        @Html.DisplayFor(model => model.Categoria)
                     </dd>
-                }
-            }
+                    <dt class="col-sm-2" style="object-fit: fill">
+                        @Html.DisplayNameFor(model => model.Classificacao)
+                    </dt>
+                    <dd class="col-sm-10" style="object-fit: fill">
+                        @Html.DisplayFor(model => model.Classificacao)
+                    </dd>
+                    <dt class="col-sm-2" style="object-fit: fill">
+                        @Html.DisplayNameFor(model => model.Realizador)
+                    </dt>
+                    <dd class="col-sm-10" style="object-fit: fill">
+                        @Html.DisplayFor(model => model.Realizador)
+                    </dd>
+                    <dt class="col-sm-2" style="object-fit: fill">
+                        @Html.DisplayNameFor(model => model.Elenco)
+                    </dt>
+                    <dd class="col-sm-10" style="object-fit: fill">
+                        @Html.DisplayFor(model => model.Elenco)
+                    </dd>
+                    <dt class="col-sm-2" style="object-fit: fill">
+                        @Html.DisplayNameFor(model => model.Sinopse)
+                    </dt>
+                    <dd class="col-sm-10" style="object-fit: fill; text-align:justify">
+                        @Html.DisplayFor(model => model.Sinopse)
+                    </dd>
 
-        </dl>
-        <br />
+                    @{ if (User.IsInRole("Gestor"))
+                        {
+                            <dt class="col-sm-2" style="object-fit: fill">
+                                @Html.DisplayNameFor(model => model.Visibilidade)
+                            </dt>
+                            <dd class="col-sm-10" style="object-fit: fill">
+                                @Html.DisplayFor(model => model.Visibilidade)
+                            </dd>
+                        }
+                    }
 
-        <div style="text-align:center">
-            @{ if (User.IsInRole("Gestor"))
-                {
-                    <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
-                }
+                </dl>
+                <br />
 
-            }
-            <a class="btn btn-outline-secondary" asp-action="Index">Voltar à Lista de Filmes</a>
+                <div style="text-align:center">
+                    @{ if (User.IsInRole("Gestor"))
+                        {
+                            <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                        }
 
-            @{ if (User.Identity.IsAuthenticated)
-                {
-                    if (ViewBag.Favorito == false)
+                    }
+                    <a class="btn btn-outline-secondary" asp-action="Index">Voltar à Lista de Filmes</a>
+
+                    @{ if (User.Identity.IsAuthenticated)
+                        {
+                            if (ViewBag.Favorito == false)
+                            {
+                                <form asp-action="AddFavorito" style="margin-top:10px">
+                                    <input type="hidden" name="filmeId" value="@Model.Id" />
+                                    <input type="submit" value="Adicionar aos Favoritos" class="btn btn-primary" />
+                                </form>
+                            }
+                            else
+                            {
+                                <input type="submit" value="Adicionado aos Favoritos" class="btn btn-primary" style="background-color:green" disabled />
+                            }
+
+                        }
+                    }
+
+                </div>
+
+            </div>
+
+            <hr />
+            <br />
+
+            <!--para aparecer os links dos filmes que foram adicionados, o count aparecee 0-->
+            <div style="text-align:center">
+                @{ if (User.Identity.IsAuthenticated)
                     {
-                        <form asp-action="AddFavorito" style="margin-top:10px">
-                            <input type="hidden" name="filmeId" value="@Model.Id" />
-                            <input type="submit" value="Adicionar aos Favoritos" class="btn btn-primary" />
-                        </form>
+                        if (Model.ListaDeLinks.Count != 0)
+                        {
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="color:#ffb727">
+                                            Link ID
+                                        </th>
+                                        <th style="color:#ffb727">
+                                            Link
+                                        </th>
+                                        @if (User.IsInRole("Gestor"))
+                                        {
+                                            <th></th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ListaDeLinks)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Id)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.URL)
+                                            </td>
+                                            @if (User.IsInRole("Gestor"))
+                                            {
+                                                <td>
+                                                    <a class="btn btn-outline-primary" style="width:100px" asp-area="" asp-controller="Links" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                                                    <a class="btn btn-outline-warning" style="width:100px" asp-area="" asp-controller="Links" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <h6 style="color: whitesmoke">Este filme ainda não tem links.</h6>
+                        }
+
+                        <br />
+                        <hr />
+                        <br />
+
+                        <div>
+                            <form asp-action="CreateLink">
+                                <input type="hidden" name="filmeId" value="@Model.Id" />
+                                <span style="color:white">Link a adicionar:</span><br />
+                                <input required name="url" style="margin-bottom:10px; width:420px"><br />
+                                <input type="submit" value="Adicionar Link" class="btn btn-primary" />
+                            </form>
+                        </div>
                     }
                     else
                     {
-                        <input type="submit" value="Adicionado aos Favoritos" class="btn btn-primary" style="background-color:green" disabled/>
+                        <h5 style="color: whitesmoke"> Precisa de autenticar-se para poder adicionar e ter acesso aos links que permitem a visualização do respetivo filme!</h5>
+                        <br />
                     }
-
-                }
-            }
-
-        </div>
-
-    </div>
-
-    <hr />
-    <br />
-
-    <!--para aparecer os links dos filmes que foram adicionados, o count aparecee 0-->
-    <div style="text-align:center">
-        @{ if (User.Identity.IsAuthenticated)
-            {
-                if (Model.ListaDeLinks.Count != 0)
-                {
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th style="color:#ffb727">
-                                    Link ID
-                                </th>
-                                <th style="color:#ffb727">
-                                    Link
-                                </th>
-                                @if (User.IsInRole("Gestor"))
-                                {
-                                    <th></th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.ListaDeLinks)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Id)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.URL)
-                                    </td>
-                                    @if (User.IsInRole("Gestor"))
-                                    {
-                                        <td>
-                                            <a class="btn btn-outline-primary" style="width:100px" asp-area="" asp-controller="Links" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                                            <a class="btn btn-outline-warning" style="width:100px" asp-area="" asp-controller="Links" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                                        </td>
-                                    }
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <h6 style="color: whitesmoke">Este filme ainda não tem links.</h6>
                 }
 
-                <br />
-                <hr />
-                <br />
 
-                <div>
-                    <form asp-action="CreateLink">
-                        <input type="hidden" name="filmeId" value="@Model.Id" />
-                        <span style="color:white">Link a adicionar:</span><br />
-                        <input required name="url" style="margin-bottom:10px; width:420px"><br />
-                        <input type="submit" value="Adicionar Link" class="btn btn-primary" />
-                    </form>
-                </div>
-            }
-            else
-            {
-                <h5 style="color: whitesmoke"> Precisa de autenticar-se para poder adicionar e ter acesso aos links que permitem a visualização do respetivo filme!</h5>
-                <br />
-            }
+            </div>
+
         }
-
-
-    </div>
-
+        else
+        {
+            <div style="text-align:center">
+                <h2 style="color:red">Não é possível aceder à página deste Filme!</h2>
+                <hr />
+                <h4>Este conteúdo não está disponível por escolha dos Gestores desta aplicação Web.</h4>
+            </div>
+        }
+    }
 
 
 </body>

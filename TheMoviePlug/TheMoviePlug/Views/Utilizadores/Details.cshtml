@@ -40,8 +40,9 @@
 <body>
     @{ if (User.IsInRole("Gestor") || Model.Email == User.Identity.Name.ToLower())
         {
-            <h1>Detalhes do Utilizador</h1>
+            <h1>Perfil do Utilizador</h1>
             <hr />
+            <br />
 
             <div>
                 <dl class="row">

@@ -49,7 +49,7 @@ namespace TheMoviePlug.Controllers
         // GET: Links/Create
         public IActionResult Create()
         {
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Categoria");
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo");
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Email");
             return View();
         }
@@ -67,7 +67,7 @@ namespace TheMoviePlug.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Categoria", links.FilmeFK);
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo", links.FilmeFK);
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Email", links.UtilizadorFK);
             return View(links);
         }
@@ -85,7 +85,7 @@ namespace TheMoviePlug.Controllers
             {
                 return NotFound();
             }
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Categoria", links.FilmeFK);
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo", links.FilmeFK);
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Email", links.UtilizadorFK);
             return View(links);
         }
@@ -122,7 +122,7 @@ namespace TheMoviePlug.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Categoria", links.FilmeFK);
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo", links.FilmeFK);
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Email", links.UtilizadorFK);
             return View(links);
         }

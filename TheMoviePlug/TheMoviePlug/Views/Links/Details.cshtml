@@ -8,8 +8,8 @@
 <style>
     body {
         background-color: rgb(0, 0, 0, 0.80);
-
     }
+
     dt, h1 {
         color: #ffb727;
     }
@@ -17,41 +17,64 @@
     dd {
         color: azure;
     }
-    </style>
 
-<h1>Details</h1>
+    hr {
+        background-color: white;
+    }
 
-<div>
-    <br/>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.URL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.URL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Visivel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Visivel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Utilizador)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Utilizador.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Filme)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Filme.Titulo)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <a class="btn btn-outline-secondary" style="padding-bottom:5px" asp-action="Index">Back to List</a>
-</div>
+</style>
+
+
+<body>
+
+    @{ if (User.IsInRole("Gestor"))
+        {
+            <h1>Detalhes do Link</h1>
+            <hr />
+            <br />
+
+            <div>
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.URL)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.URL)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Utilizador)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Utilizador.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Filme)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Filme.Titulo)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Visivel)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Visivel)
+                    </dd>
+                </dl>
+            </div>
+            <div>
+                <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Links'</a>
+            </div>
+
+        }
+        else
+        {
+            <div style="text-align:center">
+                <h2 style="color:red">Não é possível aceder aos detalhes de um Link pois é preciso autenticar-se como Gestor!</h2>
+                <hr />
+                <h4>Para aceder a este conteúdo precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+            </div>
+        }
+    }
+
+</body>

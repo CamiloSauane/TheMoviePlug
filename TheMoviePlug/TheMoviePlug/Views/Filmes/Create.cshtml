@@ -6,6 +6,7 @@
 
 
 <style>
+
     body {
         background-color: rgb(0, 0, 0, 0.80);
     }
@@ -13,16 +14,22 @@
     label {
         color: #ffb727;
     }
+
+    hr {
+        background-color: white;
+    }
+
 </style>
+
 
 <body>
     @{ if (User.IsInRole("Gestor"))
         {
-            <h2 style="color:azure ; position:center ; text-align:center">Create</h2>
-
+            <h2 style="color:azure ; position:center ; text-align:center">Adição de Filme</h2>
             <hr />
+
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <form asp-action="Create" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
@@ -62,30 +69,36 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Sinopse" class="control-label"></label>
-                            <textarea asp-for="Sinopse" class="form-control" ></textarea>
+                            <textarea asp-for="Sinopse" class="form-control" style="width: 580px; height:350px"></textarea>
                             <span asp-validation-for="Sinopse" class="text-danger"></span>
                         </div>
+
                         <div class="form-group">
-                            <input type="submit" value="Criar" class="btn btn-primary" />
+                            <input type="submit" value="Adicionar" class="btn btn-primary" />
                         </div>
                     </form>
                 </div>
             </div>
 
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Filmes'</a>
             </div>
         }
         else
         {
-            <h2 style="text-align: center; color:red">Não é possível criar um Filme pois é preciso autenticar-se como Gestor!</h2>
-            <hr />
-            <h4 style="text-align:center">Para aceder a este conteúdo precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+            <div style="text-align:center">
+                <h2 style="color:red">Não é possível adicionar um Filme pois é preciso autenticar-se como Gestor!</h2>
+                <hr />
+                <h4>Para aceder a este conteúdo precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+            </div>
         }
     }
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+
 </body>
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

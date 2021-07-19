@@ -4,6 +4,7 @@
     ViewData["Title"] = "Delete";
 }
 
+
 <style>
 
     body {
@@ -21,75 +22,99 @@
     h3 {
         color: azure;
     }
+
+    hr {
+        background-color: white;
+    }
+
 </style>
 
+
 <body>
+    @{ if (User.IsInRole("Gestor"))
+        {
+            <h3>Tem a certeza que pretende eliminar este Filme?</h3>
+            <hr />
+            <br />
 
-    <h3>Are you sure you want to delete this?</h3>
-    <div>
-        <br/>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Titulo)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Titulo)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Imagem)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Imagem)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Categoria)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Categoria)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Lancamento)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Lancamento)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Classificacao)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Classificacao)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Realizador)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Realizador)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Elenco)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Elenco)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Sinopse)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Sinopse)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Visibilidade)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Visibilidade)
-            </dd>
-        </dl>
+            <div>
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Titulo)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Titulo)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Imagem)
+                    </dt>
+                    <dd class="col-sm-10">
+                        <img src="~/Imagens/@Html.DisplayFor(model => model.Imagem)"
+                             style="border: 2px solid white;  float:left"
+                             width="190" height="282"
+                             alt="Capa do filme @Html.DisplayFor(model => model.Imagem)"
+                             title="@Html.DisplayFor(model => model.Imagem)" />
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Categoria)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Categoria)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Lancamento)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Lancamento)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Classificacao)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Classificacao)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Realizador)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Realizador)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Elenco)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Elenco)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Sinopse)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Sinopse)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Visibilidade)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Visibilidade)
+                    </dd>
+                </dl>
+                <hr />
 
-        <form asp-action="Delete">
-            <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            <a class="btn btn-outline-secondary" style="padding-bottom:5px" asp-action="Index">Back to List</a>
-        </form>
-    </div>
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Apagar" class="btn btn-danger" /> |
+                    <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Filmes'</a>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div style="text-align:center">
+                <h2 style="color:red">Não é possível eliminar um Filme pois é preciso autenticar-se como Gestor!</h2>
+                <hr />
+                <h4>Para aceder a este conteúdo precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+            </div>
+        }
+    }
+
 </body>
