@@ -43,15 +43,14 @@
             <h1>Lista de Filmes</h1>
             <hr />
             @if (User.IsInRole("Gestor"))
-                {
-                    <p>
-                        <a class="btn btn-outline-success" asp-action="Create">Adicionar Link</a>
-                    </p>
-                }
-                else
-                {
-                    <br />
-                }
+            {
+                <p>
+                    <a class="btn btn-outline-success" asp-action="Create">Adicionar Link</a>
+                </p>
+            }
+            else
+            {
+                <br />
             }
 
             <table class="table">
@@ -118,7 +117,6 @@
                                 </tr>
                             }
                         }
-
 
                     }
                 </tbody>
