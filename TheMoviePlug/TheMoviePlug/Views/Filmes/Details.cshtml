@@ -132,12 +132,15 @@
                             {
                                 <form asp-action="AddFavorito" style="margin-top:10px">
                                     <input type="hidden" name="filmeId" value="@Model.Id" />
-                                    <input type="submit" value="Adicionar aos Favoritos" class="btn btn-primary" />
+                                    <input type="submit" class="btn btn-outline-success" value="Adicionar aos Favoritos" />
                                 </form>
                             }
                             else
                             {
-                                <input type="submit" value="Adicionado aos Favoritos" class="btn btn-primary" style="background-color:green" disabled />
+                                <form asp-action="DeleteFavorito" style="margin-top:10px">
+                                    <input type="hidden" name="filmeId" value="@Model.Id" />
+                                    <input type="submit" class="btn btn-outline-danger" value="Remover dos Favoritos" />
+                                </form>
                             }
 
                         }
@@ -168,6 +171,10 @@
                                         </th>
                                         @if (User.IsInRole("Gestor"))
                                         {
+
+                                            <th style="color:#ffb727">
+                                                Visibilidade
+                                            </th>
                                             <th></th>
                                         }
                                     </tr>
@@ -175,21 +182,31 @@
                                 <tbody>
                                     @foreach (var item in Model.ListaDeLinks)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Id)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.URL)
-                                            </td>
-                                            @if (User.IsInRole("Gestor"))
-                                            {
+                                        if (User.IsInRole("Gestor") || item.Visivel)
+                                        {
+                                            <tr>
                                                 <td>
-                                                    <a class="btn btn-outline-primary" style="width:100px" asp-area="" asp-controller="Links" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                                                    <a class="btn btn-outline-warning" style="width:100px" asp-area="" asp-controller="Links" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                                                    @Html.DisplayFor(modelItem => item.Id)
                                                 </td>
-                                            }
-                                        </tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.URL)
+                                                </td>
+                                                @if (User.IsInRole("Gestor"))
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Visivel)
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-outline-primary" style="width:100px" asp-area="" asp-controller="Links" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                                                        <form asp-action="MudaVisivel">
+                                                            <input type="hidden" name="filmeId" value="@Model.Id" style="margin-top:5px" />
+                                                            <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                                            <input type="submit" class="btn btn-outline-warning" value="Mudar Visibilidade" />
+                                                        </form>
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
                                     }
                                 </tbody>
                             </table>

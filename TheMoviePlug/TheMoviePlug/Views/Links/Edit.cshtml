@@ -22,7 +22,7 @@
 
 <body>
 
-    @{ if (User.IsInRole("Gestor"))
+    @{ if (User.Identity.Name.ToLower() == Model.Utilizador.Email)
         {
             <h1>Editar Link</h1>
             <hr />
@@ -39,18 +39,18 @@
                             <span asp-validation-for="URL" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" style="display: none">
                             <label asp-for="UtilizadorFK" class="control-label"></label>
                             <select asp-for="UtilizadorFK" class="form-control" asp-items="ViewBag.UtilizadorFK" disabled></select>
                             <span asp-validation-for="UtilizadorFK" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none">
                             <label asp-for="FilmeFK" class="control-label"></label>
                             <select asp-for="FilmeFK" class="form-control" asp-items="ViewBag.FilmeFK" disabled></select>
                             <span asp-validation-for="FilmeFK" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group form-check">
+                        <div class="form-group form-check" style="display: none">
                             <label class="form-check-label">
                                 <input class="form-check-input" asp-for="Visivel" /> @Html.DisplayNameFor(model => model.Visivel)
                             </label>
@@ -69,9 +69,9 @@
         else
         {
             <div style="text-align:center">
-                <h2 style="color:red">Não é possível editar um Link pois é preciso autenticar-se como Gestor!</h2>
+                <h2 style="color:red">Apenas o Utilizador que adicionou este Link pode editar o mesmo!</h2>
                 <hr />
-                <h4>Para aceder a este recurso precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+                <h4>Se é o Utilizador que adicionou este Link e pretende aceder a este recurso: por favor, efetue o login.</h4>
             </div>
         }
     }

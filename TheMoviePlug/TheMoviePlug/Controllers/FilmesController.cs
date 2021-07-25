@@ -43,9 +43,9 @@ namespace TheMoviePlug.Controllers
             }
 
             var filme = await _context.Filmes
-                .Include(x => x.ListaDeLinks)
-                .Include(x => x.ListaDeFavoritos)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(f => f.ListaDeLinks)
+                .Include(f => f.ListaDeFavoritos)
+                .FirstOrDefaultAsync(f => f.Id == id);
 
             if (filme == null)
             {
@@ -79,6 +79,9 @@ namespace TheMoviePlug.Controllers
         {
             return View();
         }
+
+
+
 
         // POST: Filmes/CreateLink
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -115,33 +118,42 @@ namespace TheMoviePlug.Controllers
                 }
             }
 
-            return View();
+            // Redireciona para a página do Filme
+            return RedirectToAction(nameof(Details), new { id = filmeId });
         }
 
-        // POST: Filmes/CreateLink
+        // POST: Filmes/AddFavorito
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Função que permite adicionar um Favorito à base de dados com o Id do Utilizador + Id do Filme
+        /// </summary>
+        /// <param name="filmeId">Id do Filme que está a adicionar aos favoritos</param>
+        /// <returns>A respetiva View</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddFavorito(int filmeId)
         {
-            // Guarda o Utilizador que está a adicionar o Link 
+            // Busca o Utilizador que está a adicionar o Favorito para saber o seu Id
             var utilizador = _context.Utilizadores.Where(u => u.UserName == _userManager.GetUserId(User)).FirstOrDefault();
 
+            // Encontra o Filme através do Id que recebeu como parâmetro
             var filme = _context.Filmes.Where(f => f.Id == filmeId).FirstOrDefault();
 
-            // Cria um novo Link com os atributos definidos
+            // Cria um novo Favorito com os atributos definidos
             var favorito = new Favoritos
             {
                 UtilizadorFK = utilizador.Id,
                 FilmeFK = filme.Id
             };
 
+            // Verifica se o ModelState é válido
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Adicionar o Link à base de dados
+                    // Adicionar o Favorito à base de dados
                     _context.Add(favorito);
                     // Guarda as alterações feitas na base de dados
                     await _context.SaveChangesAsync();
@@ -149,12 +161,106 @@ namespace TheMoviePlug.Controllers
                 }
                 catch (Exception)
                 {
+                    // Apresenta uma mensagem de erro se ocorreu uma excepção nas linhas de código acima
                     ModelState.AddModelError("", "Ocorreu um erro na adição do Favorito!");
                 }
             }
 
-            return View();
+            // Redireciona para a página do Filme
+            return RedirectToAction(nameof(Details), new { id = filmeId });
         }
+
+
+        // POST: Filmes/DeleteFavorito
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Função que permite remover um Favorito da base de dados com o Id do Utilizador + Id do Filme
+        /// </summary>
+        /// <param name="filmeId">Id do Filme que está a removido aos favoritos</param>
+        /// <returns>A respetiva View</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFavorito(int filmeId)
+        {
+            // Vai buscar o Utilizador que está a remover o Favorito 
+            var utilizador = _context.Utilizadores.Where(u => u.UserName == _userManager.GetUserId(User)).FirstOrDefault();
+
+            // Verifica qual o Favorito através do Id do Utilizador + Id do Filme
+            var favorito = _context.Favoritos.Where(f => f.FilmeFK == filmeId && f.UtilizadorFK == utilizador.Id).FirstOrDefault();
+
+            // Verifica se o ModelState é válido
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Remover o Favorito da base de dados
+                    _context.Remove(favorito);
+                    // Guarda as alterações feitas na base de dados
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { id = filmeId });
+                }
+                catch (Exception)
+                {
+                    // Apresenta uma mensagem de erro se ocorreu uma excepção nas linhas de código acima
+                    ModelState.AddModelError("", "Ocorreu um erro na remoção do Favorito!");
+                }
+            }
+
+            // Redireciona para a página do Filme
+            return RedirectToAction(nameof(Details), new { id = filmeId });
+        }
+
+
+        // POST: Filmes/MudaVisivel
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Função que mudar a Visibilidade de um Link
+        /// </summary>
+        /// <param name="linkId">Id do Link que vai sofrer alteração na visibulidade</param>
+        /// <returns>A respetiva View</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MudaVisivel(int linkId, int filmeId)
+        {
+            // Vai buscar o Link a partir do parâmetro recebido (linkId) 
+            var link = _context.Links.Where(l => l.Id == linkId).FirstOrDefault();
+
+            // Dependendo da Visibilidade, vai se reverter
+            if(link.Visivel == true)
+            {
+                link.Visivel = false;
+            }
+            else
+            {
+                link.Visivel = true;
+            }
+
+            // Verifica se o ModelState é válido
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Atualiza o Link na base de dados
+                    _context.Update(link);
+                    // Guarda as alterações feitas na base de dados
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { id = filmeId });
+                }
+                catch (Exception)
+                {
+                    // Apresenta uma mensagem de erro se ocorreu uma excepção nas linhas de código acima
+                    ModelState.AddModelError("", "Ocorreu um erro na mudança da visibilidade do Link!");
+                }
+            }
+
+            // Redireciona para a página do Filme
+            return RedirectToAction(nameof(Details), new { id = filmeId });
+        }
+
 
         // POST: Filmes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

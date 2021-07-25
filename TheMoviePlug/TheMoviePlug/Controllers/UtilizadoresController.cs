@@ -45,6 +45,56 @@ namespace TheMoviePlug.Controllers
             return View(utilizadores);
         }
 
+
+        // POST: Utilizadores/MudaAtivo
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Função que mudar a Visibilidade de um Link
+        /// </summary>
+        /// <param name="linkId">Id do Link que vai sofrer alteração na visibulidade</param>
+        /// <returns>A respetiva View</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MudaAtivo(int utilizadorId)
+        {
+            // Vai buscar o Link a partir do parâmetro recebido (linkId) 
+            var utilizador = _context.Utilizadores.Where(u => u.Id == utilizadorId).FirstOrDefault();
+
+            // Dependendo da Visibilidade, vai se reverter
+            if (utilizador.Ativo == true)
+            {
+                utilizador.Ativo = false;
+            }
+            else
+            {
+                utilizador.Ativo = true;
+            }
+
+            // Verifica se o ModelState é válido
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Atualiza o Link na base de dados
+                    _context.Update(utilizador);
+                    // Guarda as alterações feitas na base de dados
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception)
+                {
+                    // Apresenta uma mensagem de erro se ocorreu uma excepção nas linhas de código acima
+                    ModelState.AddModelError("", "Ocorreu um erro na mudança da visibilidade do Link!");
+                }
+            }
+
+            // Redireciona para a página do Filme
+            return RedirectToAction(nameof(Index));
+        }
+
+
         // GET: Utilizadores/Create
         public IActionResult Create()
         {
@@ -141,8 +191,8 @@ namespace TheMoviePlug.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var utilizadores = await _context.Utilizadores.FindAsync(id);
-            _context.Utilizadores.Remove(utilizadores);
+            var utilizador = await _context.Utilizadores.FindAsync(id);
+            _context.Utilizadores.Remove(utilizador);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

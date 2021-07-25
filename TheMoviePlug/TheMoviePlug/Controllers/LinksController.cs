@@ -80,14 +80,14 @@ namespace TheMoviePlug.Controllers
                 return NotFound();
             }
 
-            var links = await _context.Links.FindAsync(id);
-            if (links == null)
+            var link = await _context.Links.Include(l => l.Utilizador).FirstOrDefaultAsync(l => l.Id == id);
+            if (link == null)
             {
                 return NotFound();
             }
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo", links.FilmeFK);
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Email", links.UtilizadorFK);
-            return View(links);
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo", link.FilmeFK);
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Email", link.UtilizadorFK);
+            return View(link);
         }
 
         // POST: Links/Edit/5
