@@ -198,11 +198,22 @@
                                                     </td>
                                                     <td>
                                                         <a class="btn btn-outline-primary" style="width:100px" asp-area="" asp-controller="Links" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                                                        <form asp-action="MudaVisivel">
-                                                            <input type="hidden" name="filmeId" value="@Model.Id" style="margin-top:5px" />
-                                                            <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => item.Id)" />
-                                                            <input type="submit" class="btn btn-outline-warning" value="Mudar Visibilidade" />
-                                                        </form>
+                                                        @if (item.Filme.Visibilidade)
+                                                        {
+                                                            <form asp-action="MudaVisivel" style="margin-top:5px">
+                                                                <input type="hidden" name="filmeId" value="@Model.Id" />
+                                                                <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                                                <input type="submit" class="btn btn-outline-danger" value="Esconder" />
+                                                            </form>
+                                                        }
+                                                        else
+                                                        {
+                                                            <form asp-action="MudaVisivel" style="margin-top:5px">
+                                                                <input type="hidden" name="filmeId" value="@Model.Id" />
+                                                                <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                                                <input type="submit" class="btn btn-outline-success" value="Mostrar" />
+                                                            </form>
+                                                        }
                                                     </td>
                                                 }
                                             </tr>

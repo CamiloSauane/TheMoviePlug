@@ -69,6 +69,7 @@ namespace TheMoviePlug.Controllers
                 {
                     ViewBag.Favorito = true;
                 }
+
             }
 
             return View(filme);

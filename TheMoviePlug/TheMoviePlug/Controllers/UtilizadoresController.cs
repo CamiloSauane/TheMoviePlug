@@ -109,8 +109,48 @@ namespace TheMoviePlug.Controllers
         }
 
 
-        // GET: Utilizadores/Create
-        public IActionResult Create()
+        // POST: Utilizadores/DeleteFavorito
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Função que permite remover um Favorito da base de dados com o Id do Utilizador + Id do Filme
+        /// </summary>
+        /// <param name="filmeId">Id do Filme que está a removido aos Favoritos</param>
+        /// <param name="utilizadorId">Id do Utilizador que está a remover o Filme dos Favoritos</param>
+        /// <returns>A respetiva View</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFavorito(int filmeId, int utilizadorId)
+        {
+
+            // Verifica qual o Favorito através do Id do Utilizador + Id do Filme
+            var favorito = _context.Favoritos.Where(f => f.FilmeFK == filmeId && f.UtilizadorFK == utilizadorId).FirstOrDefault();
+
+            // Verifica se o ModelState é válido
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Remover o Favorito da base de dados
+                    _context.Remove(favorito);
+                    // Guarda as alterações feitas na base de dados
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { id = utilizadorId });
+                }
+                catch (Exception)
+                {
+                    // Apresenta uma mensagem de erro se ocorreu uma excepção nas linhas de código acima
+                    ModelState.AddModelError("", "Ocorreu um erro na remoção do Favorito!");
+                }
+            }
+
+            // Redireciona para a página do Filme
+            return RedirectToAction(nameof(Details), new { id = utilizadorId });
+        }
+
+            // GET: Utilizadores/Create
+            public IActionResult Create()
         {
             return View();
         }

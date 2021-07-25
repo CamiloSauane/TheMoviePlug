@@ -90,6 +90,10 @@
             <br />
 
             <div>
+                <div style="text-align: center; color: whitesmoke; margin-bottom: 10px">
+                    <h3>Lista de Favoritos</h3>
+                </div>
+
                 @{if (Model.ListaFavoritos.Count != 0)
                     {
                         <table class="table">
@@ -119,41 +123,58 @@
                                             Visibilidade
                                         </th>
                                     }
+                                    @if (Model.Email == User.Identity.Name.ToLower())
+                                    {
+                                        <th></th>
+                                    }
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.ListaFavoritos)
                                 {
-                                    <tr>
-                                        <td>
-                                            <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Filme.Imagem)"
-                                                 style="border: 2px solid white"
-                                                 width="120"
-                                                 alt="Capa do filme @Html.DisplayFor(modelItem => item.Filme.Titulo)"
-                                                 title="@Html.DisplayFor(modelItem => item.Filme.Titulo)" />
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Filme.Titulo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Filme.Categoria)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Filme.Lancamento.Year)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Filme.Classificacao)
-                                        </td>
-                                        <td style="text-align:justify">
-                                            @Html.DisplayFor(modelItem => item.Filme.Sinopse)
-                                        </td>
-                                        @if (User.IsInRole("Gestor"))
-                                        {
+                                    if (User.IsInRole("Gestor") || item.Filme.Visibilidade)
+                                    {
+                                        <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Filme.Visibilidade)
+                                                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Filme.Imagem)"
+                                                     style="border: 2px solid white"
+                                                     width="120"
+                                                     alt="Capa do filme @Html.DisplayFor(modelItem => item.Filme.Titulo)"
+                                                     title="@Html.DisplayFor(modelItem => item.Filme.Titulo)" />
                                             </td>
-                                        }
-                                    </tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Filme.Titulo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Filme.Categoria)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Filme.Lancamento.Year)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Filme.Classificacao)
+                                            </td>
+                                            <td style="text-align:justify">
+                                                @Html.DisplayFor(modelItem => item.Filme.Sinopse)
+                                            </td>
+                                            @if (User.IsInRole("Gestor"))
+                                            {
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Filme.Visibilidade)
+                                                </td>
+                                            }
+                                            @if (Model.Email == User.Identity.Name.ToLower())
+                                            {
+                                                <td>
+                                                    <form asp-action="DeleteFavorito" style="margin-top:10px">
+                                                        <input type="hidden" name="filmeId" value="@Model.Id" />
+                                                        <input type="hidden" name="filmeId" value="@Model.Id" />
+                                                        <input type="submit" class="btn btn-outline-danger" value="Remover dos Favoritos" />
+                                                    </form>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
                                 }
                             </tbody>
                         </table>
