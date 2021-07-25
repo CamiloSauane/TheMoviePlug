@@ -67,7 +67,7 @@ namespace TheMoviePlug.Controllers
             var utilizador = _context.Utilizadores.Where(u => u.Id == utilizadorId).FirstOrDefault();
 
             // Vai buscar o AspNet User a partir do Email do Utilizador
-            var user = await _context.Users.Where(u => u.Email == utilizador.Email).FirstOrDefaultAsync();
+            var user = _context.Users.Where(u => u.Email == utilizador.Email).FirstOrDefault();
 
             // Dependendo do atributo "Ativo", vai se reverter
             if (utilizador.Ativo == true)
@@ -75,8 +75,8 @@ namespace TheMoviePlug.Controllers
                 utilizador.Ativo = false;
                 // Define a data de fim do bloqueio para o fim do ano seguinte
                 var dataBloqueio = new DateTime(DateTime.Now.Year + 1, 1, 1);
-                // 
-                await _userManager.SetLockoutEndDateAsync(user, dataBloqueio);
+
+                user.LockoutEnd = dataBloqueio;
             }
             else
             {

@@ -77,7 +77,11 @@
             </div>
 
             <div>
-                <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                @if (Model.Email == User.Identity.Name.ToLower())
+                {
+                    <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                }
+
                 <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Utilizadores'</a>
             </div>
 

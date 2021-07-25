@@ -38,7 +38,7 @@
 
 
 <body>
-    @{ if (User.IsInRole("Gestor"))
+    @{ if (User.Identity.IsAuthenticated)
         {
             <h1>Lista de Utilizadores</h1>
             <hr />
@@ -56,42 +56,57 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Telemovel)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Ativo)
-                        </th>
+                        @if (User.IsInRole("Gestor"))
+                        {
+                            <th>
+                                @Html.DisplayNameFor(model => model.Ativo)
+                            </th>
+                        }
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
+                        if (User.IsInRole("Gestor") || item.Email == User.Identity.Name.ToLower())
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Telemovel)
+                                </td>
+                                @if (User.IsInRole("Gestor"))
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ativo)
+                                    </td>
+                                }
                             <td>
-                                @Html.DisplayFor(modelItem => item.Nome)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Telemovel)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Ativo)
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-primary" style="width:110px" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
                                 <a class="btn btn-outline-warning" style="width:110px ; margin-top:10px; margin-bottom:10px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                            </td>
-                        </tr>
+                                @if (User.IsInRole("Gestor"))
+                                {
+                                    <form asp-action="MudaAtivo" style="margin-top:2px">
+                                        <input type="hidden" name="utilizadorId" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                        <input type="submit" class="btn btn-outline-danger" value="Bloquear" />
+                                    </form>
+                                }
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
         }
         else
         {
-            <h2 style="text-align: center; color:red">Não é possível aceder à "Lista de Utilizadores" pois é preciso autenticar-se como Gestor!</h2>
+            <h2 style="text-align: center; color:red">Não é possível aceder à "Lista de Utilizadores" pois é preciso autenticar-se!</h2>
             <hr />
-            <h4 style="text-align:center">Para aceder a este conteúdo precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+            <h4 style="text-align:center">Para aceder a este conteúdo precisa de registrar-se, ou, se já tiver uma conta, efetue o login.</h4>
         }
     }
 </body>

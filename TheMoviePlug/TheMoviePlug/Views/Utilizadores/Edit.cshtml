@@ -22,7 +22,7 @@
 
 <body>
 
-    @{ if (User.IsInRole("Gestor"))
+    @{ if (Model.Email == User.Identity.Name.ToLower())
         {
             <h1>Editar Utilizador</h1>
             <hr />
@@ -38,7 +38,7 @@
                             <input asp-for="Nome" class="form-control" />
                             <span asp-validation-for="Nome" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none">
                             <label asp-for="Email" class="control-label"></label>
                             <input asp-for="Email" class="form-control" />
                             <span asp-validation-for="Email" class="text-danger"></span>
@@ -48,7 +48,7 @@
                             <input asp-for="Telemovel" class="form-control" />
                             <span asp-validation-for="Telemovel" class="text-danger"></span>
                         </div>
-                        <div class="form-group form-check">
+                        <div class="form-group form-check" style="display: none">
                             <label class="form-check-label">
                                 <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
                             </label>
@@ -63,14 +63,13 @@
             <div>
                 <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Utilizadores'</a>
             </div>
-
         }
         else
         {
             <div style="text-align:center">
-                <h2 style="color:red">Não é possível editar um Utilizador pois é preciso autenticar-se como Gestor!</h2>
+                <h2 style="color:red">Não é possível editar um Utilizador pois é preciso ser o próprio!</h2>
                 <hr />
-                <h4>Para aceder a este conteúdo precisa de registrar-se como Gestor, ou, se já tiver uma conta de Gestor, efetue o login.</h4>
+                <h4>Se for o próprio Utilizador faça o login acedendo à opção "Entrar" no canto superior direito.</h4>
             </div>
         }
     }
