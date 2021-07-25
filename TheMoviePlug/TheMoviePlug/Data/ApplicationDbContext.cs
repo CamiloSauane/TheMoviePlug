@@ -38,41 +38,6 @@ namespace TheMoviePlug.Data
 				new IdentityRole { Id = "g", Name = "Gestor", NormalizedName = "GESTOR" }
 			);
 
-			modelBuilder.Entity<Utilizadores>().HasData(
-				new Utilizadores { Id = 1, Nome = "Jénifer Lalanda Alvelos Perreira", Email = "jen.alvelos12@fakemail.com", Telemovel = "916729407", Ativo = true },
-				new Utilizadores { Id = 2, Nome = "Ranya Banha ", Email = "banhinhas@fmail.com", Telemovel = "934736786", Ativo = true },
-				new Utilizadores { Id = 3, Nome = "Diniz Ribas Vieira", Email = "dinizrv1@coldmail.com", Telemovel = "913430471", Ativo = true },
-				new Utilizadores { Id = 4, Nome = "Luis Sardo Lage", Email = "lage.benfica1904@fakemail.com", Telemovel = "919974088", Ativo = true },
-				new Utilizadores { Id = 5, Nome = "Melinda Berenguer Barroqueiro", Email = "melindabb@fakemail.com", Telemovel = "918860367", Ativo = true },
-				new Utilizadores { Id = 6, Nome = "Riana Aleixo", Email = "aleixo.riana@fakemail.com", Telemovel = "911933053", Ativo = true },
-				new Utilizadores { Id = 7, Nome = "Stela Prestes Beiriz Kanté", Email = "stelastratiacela@fmail.com", Telemovel = "961617363", Ativo = true },
-				new Utilizadores { Id = 8, Nome = "Selma Bandeira de Sesimbra", Email = "selmasesimbra90@fmail.com", Telemovel = "922293804", Ativo = true },
-				new Utilizadores { Id = 9, Nome = "Kelton Malheiro Vital Junior", Email = "vitalis1904@fakemail.com", Telemovel = "966235761", Ativo = true },
-				new Utilizadores { Id = 10, Nome = "Izabella Santana Figueira", Email = "bella.santanaf@fakemail.com", Telemovel = "923893150", Ativo = true },
-				new Utilizadores { Id = 11, Nome = "Irene Lousã Quinzeiro", Email = "quinzero@fakemail.com", Telemovel = "910471369", Ativo = true },
-				new Utilizadores { Id = 12, Nome = "Sandro Roçadas Caneira", Email = "caneirolas@coldmail.com", Telemovel = "938715651", Ativo = true },
-				new Utilizadores { Id = 13, Nome = "Sónia Maria Gama de Lisboa", Email = "soniaglx@fakemail.com", Telemovel = "937926385", Ativo = true },
-				new Utilizadores { Id = 14, Nome = "Nayla Brandão de Mota", Email = "naylaaa1992@fmail.com", Telemovel = "967301205", Ativo = true },
-				new Utilizadores { Id = 15, Nome = "Denzel Manso", Email = "mansinho69@coldmail.com", Telemovel = "928014257", Ativo = true },
-				new Utilizadores { Id = 16, Nome = "Carolina Rafaela Lages Catela", Email = "carolcatela@fakemail.com", Telemovel = "960272329", Ativo = true },
-				new Utilizadores { Id = 17, Nome = "Maria Berenguer Barroqueiro", Email = "mariabb1985@fakemail.com", Telemovel = "916387910", Ativo = true },
-				new Utilizadores { Id = 18, Nome = "Suzana Lacerda de Belém", Email = "pastelbelem@fakemail.com", Telemovel = "930826337", Ativo = true },
-				new Utilizadores { Id = 19, Nome = "Íris Gonçalves Perreira da Paz", Email = "pazeamor1@fmail.com", Telemovel = "911710703", Ativo = true },
-				new Utilizadores { Id = 20, Nome = "Dario Robalinho", Email = "robalinho.dario@fmail.com", Telemovel = "929859102", Ativo = true },
-				new Utilizadores { Id = 21, Nome = "Nicolas Caparica Belmiro Antonieta", Email = "nic1906@fakemail.com", Telemovel = "924505523", Ativo = true },
-				new Utilizadores { Id = 22, Nome = "Luís Filipe Vieira", Email = "benfas@fakemail.com", Telemovel = "937064844", Ativo = true },
-				new Utilizadores { Id = 23, Nome = "Bruno de Carvalho", Email = "varandas.out76@fakemail.com", Telemovel = "926249717", Ativo = true },
-				new Utilizadores { Id = 24, Nome = "Varandas", Email = "bdc.out@coldmail.com", Telemovel = "929112026", Ativo = true },
-				new Utilizadores { Id = 25, Nome = "Jorge Pinto da Costa", Email = "osdragoes@fakemail.com", Telemovel = "922981151", Ativo = true },
-				new Utilizadores { Id = 26, Nome = "Pepe Guardiola", Email = "tikitaka@fmail.com", Telemovel = "914329411", Ativo = true },
-				new Utilizadores { Id = 27, Nome = "Kloop", Email = "manesalahfirmino@fmail.com", Telemovel = "935392465", Ativo = true },
-				new Utilizadores { Id = 28, Nome = "Ruben Amorim", Email = "formacao.76@fakemail.com", Telemovel = "932380726", Ativo = true },
-				new Utilizadores { Id = 29, Nome = "Jorge Jesus", Email = "aiphone88@fakemail.com", Telemovel = "923840017", Ativo = true },
-				new Utilizadores { Id = 30, Nome = "Sérgio Paulo Marceneiro Conceição", Email = "aziado@fakemail.com", Telemovel = "926249788", Ativo = true },
-				new Utilizadores { Id = 31, Nome = "Zinadine Zidane Careca", Email = "roleta.cabecada@coldmail.com", Telemovel = "921122026", Ativo = true },
-				new Utilizadores { Id = 32, Nome = "João Miguel Valente Tavares Oliveira", Email = "pino@coldmail.com", Telemovel = "927777777", Ativo = true }
-			);
-
 
 			modelBuilder.Entity<Filmes>().HasData(
 				new Filmes { Id = 1, Titulo = "Star Wars IV - A new hope", Imagem = "StarWars_ANewHope.jpg", Categoria = "Aventura", Lancamento = new DateTime(1977, 5, 25), Classificacao = "8.6", Realizador = "George Lucas", Elenco = "Harrison Ford, Mark Hamill, Carrie Fisher, Peter Cushing", Sinopse = "Luke Skywalker (Mark Hammil) sonha ir para a Academia como seus amigos, mas se vê envolvido em uma guerra intergalática quando seu tio compra dois robôs e com eles encontra uma mensagem da princesa Leia Organa (Carrie Fisher) para o jedi Obi-Wan Kenobi (Alec Guiness) sobre os planos da construção da Estrela da Morte, uma gigantesca estação espacial com capacidade para destruir um planeta.", Visibilidade = true },

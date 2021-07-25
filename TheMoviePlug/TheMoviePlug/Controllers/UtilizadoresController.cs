@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace TheMoviePlug.Controllers
     public class UtilizadoresController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UtilizadoresController(ApplicationDbContext context)
+        public UtilizadoresController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Utilizadores
@@ -51,25 +54,34 @@ namespace TheMoviePlug.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 
         /// <summary>
-        /// Função que mudar a Visibilidade de um Link
+        /// Função que mudar o atributo "Ativo" de um Utilizador.
+        /// Se mudar para false, bloqueia o utilizador durante o periodo de 1 ano.
         /// </summary>
-        /// <param name="linkId">Id do Link que vai sofrer alteração na visibulidade</param>
-        /// <returns>A respetiva View</returns>
+        /// <param name="utilizadorId">Id do Link que vai sofrer alteração na visibulidade</param>
+        /// <returns>A View do Index</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MudaAtivo(int utilizadorId)
         {
-            // Vai buscar o Link a partir do parâmetro recebido (linkId) 
+            // Vai buscar o Utilizador a partir do parâmetro recebido (utilizadorId) 
             var utilizador = _context.Utilizadores.Where(u => u.Id == utilizadorId).FirstOrDefault();
 
-            // Dependendo da Visibilidade, vai se reverter
+            // Vai buscar o AspNet User a partir do Email do Utilizador
+            var user = await _context.Users.Where(u => u.Email == utilizador.Email).FirstOrDefaultAsync();
+
+            // Dependendo do atributo "Ativo", vai se reverter
             if (utilizador.Ativo == true)
             {
                 utilizador.Ativo = false;
+                // Define a data de fim do bloqueio para o fim do ano seguinte
+                var dataBloqueio = new DateTime(DateTime.Now.Year + 1, 1, 1);
+                // 
+                await _userManager.SetLockoutEndDateAsync(user, dataBloqueio);
             }
             else
             {
                 utilizador.Ativo = true;
+                user.LockoutEnd = null;
             }
 
             // Verifica se o ModelState é válido
@@ -77,7 +89,9 @@ namespace TheMoviePlug.Controllers
             {
                 try
                 {
-                    // Atualiza o Link na base de dados
+                    // Atualiza o AspNet User na base de dados
+                    _context.Update(user);
+                    // Atualiza o Utilizador na base de dados
                     _context.Update(utilizador);
                     // Guarda as alterações feitas na base de dados
                     await _context.SaveChangesAsync();
@@ -86,7 +100,7 @@ namespace TheMoviePlug.Controllers
                 catch (Exception)
                 {
                     // Apresenta uma mensagem de erro se ocorreu uma excepção nas linhas de código acima
-                    ModelState.AddModelError("", "Ocorreu um erro na mudança da visibilidade do Link!");
+                    ModelState.AddModelError("", "Ocorreu um erro na mudança do 'Ativo' do Utilizador!");
                 }
             }
 
