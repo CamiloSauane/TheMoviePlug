@@ -120,11 +120,11 @@
                 <div style="text-align:center">
                     @{ if (User.IsInRole("Gestor"))
                         {
-                            <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                            <a class="btn btn-outline-warning" style="width:110px" asp-action="Edit" asp-route-id="@Model.Id">Editar Filme</a>
                         }
 
                     }
-                    <a class="btn btn-outline-secondary" asp-action="Index">Voltar à Lista de Filmes</a>
+                    <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Filmes'</a>
 
                     @{ if (User.Identity.IsAuthenticated)
                         {
@@ -198,7 +198,7 @@
                                                     </td>
                                                     <td>
                                                         <a class="btn btn-outline-primary" style="width:100px" asp-area="" asp-controller="Links" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                                                        @if (item.Filme.Visibilidade)
+                                                        @if (item.Visivel)
                                                         {
                                                             <form asp-action="MudaVisivel" style="margin-top:5px">
                                                                 <input type="hidden" name="filmeId" value="@Model.Id" />

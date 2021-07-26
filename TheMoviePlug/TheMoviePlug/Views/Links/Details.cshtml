@@ -63,6 +63,23 @@
             </div>
             <div>
                 <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Links'</a>
+
+                @if (Model.Visivel)
+                {
+                    <form asp-action="MudaVisivel" style="margin-top: 5px">
+                        <input type="hidden" name="filmeId" value="@Model.Id" />
+                        <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => Model.Id)" />
+                        <input type="submit" class="btn btn-outline-danger" value="Esconder" style="width: 110px" />
+                    </form>
+                }
+                else
+                {
+                    <form asp-action="MudaVisivel" style="margin-top: 5px">
+                        <input type="hidden" name="filmeId" value="@Model.Id" />
+                        <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => Model.Id)" />
+                        <input type="submit" class="btn btn-outline-success" value="Mostrar" style="width: 110px" />
+                    </form>
+                }
             </div>
 
         }

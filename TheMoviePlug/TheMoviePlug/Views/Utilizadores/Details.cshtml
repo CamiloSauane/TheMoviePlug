@@ -83,6 +83,25 @@
                 }
 
                 <a class="btn btn-outline-secondary" asp-action="Index">Voltar à 'Lista de Utilizadores'</a>
+
+                @if (User.IsInRole("Gestor") && Model.Email != User.Identity.Name.ToLower())
+                {
+                    if (Model.Ativo)
+                    {
+                        <form asp-action="MudaAtivo" style="margin-top:2px">
+                            <input type="hidden" name="utilizadorId" value="@Html.DisplayFor(model => model.Id)" />
+                            <input type="submit" class="btn btn-outline-danger" value="Bloquear" />
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="MudaAtivo" style="margin-top:2px">
+                            <input type="hidden" name="utilizadorId" value="@Html.DisplayFor(model => model.Id)" />
+                            <input type="submit" class="btn btn-outline-secondary" value="Desbloquear" />
+                        </form>
+                    }
+
+                }
             </div>
 
             <br />
@@ -123,10 +142,7 @@
                                             Visibilidade
                                         </th>
                                     }
-                                    @if (Model.Email == User.Identity.Name.ToLower())
-                                    {
-                                        <th></th>
-                                    }
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -163,16 +179,18 @@
                                                     @Html.DisplayFor(modelItem => item.Filme.Visibilidade)
                                                 </td>
                                             }
-                                            @if (Model.Email == User.Identity.Name.ToLower())
-                                            {
-                                                <td>
+                                            <td>
+                                                <a class="btn btn-outline-primary" style="width:110px" asp-controller="Filmes" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+
+                                                @if (Model.Email == User.Identity.Name.ToLower())
+                                                {
                                                     <form asp-action="DeleteFavorito" style="margin-top:10px">
                                                         <input type="hidden" name="filmeId" value="@Model.Id" />
                                                         <input type="hidden" name="filmeId" value="@Model.Id" />
                                                         <input type="submit" class="btn btn-outline-danger" value="Remover dos Favoritos" />
                                                     </form>
-                                                </td>
-                                            }
+                                                }
+                                            </td>
                                         </tr>
                                     }
                                 }
@@ -181,7 +199,7 @@
                     }
                     else
                     {
-                        <h6 style="text-align: center">Este utilizador ainda não tem favoritos.</h6>
+                        <h6 style="text-align: center; color: red">Este utilizador ainda não tem favoritos.</h6>
                     }
 
 

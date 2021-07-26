@@ -40,7 +40,7 @@
 <body>
     @{ if (User.Identity.IsAuthenticated)
         {
-            <h1>Lista de Filmes</h1>
+            <h1>Lista de Links</h1>
             <hr />
             @if (User.IsInRole("Gestor"))
             {
@@ -75,11 +75,7 @@
                         <th>
                             Link ID
                         </th>
-                        @{ if (User.IsInRole("Gestor"))
-                            {
-                                <th></th>
-                            }
-                        }
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,14 +102,33 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Id)
                                     </td>
-                                    @if (User.IsInRole("Gestor"))
-                                    {
-                                        <td>
+                                    <td>
+                                        @if (User.IsInRole("Gestor"))
+                                        {
                                             <a class="btn btn-outline-primary" style="width:110px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                                            <a class="btn btn-outline-warning" style="width:110px ; margin-top:10px; margin-bottom:10px" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                                            <a class="btn btn-outline-danger" style="width:110px" asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
-                                        </td>
-                                    }
+                                            <a class="btn btn-outline-danger" style="margin-top: 5px; width: 110px" asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
+                                            @if (item.Visivel)
+                                            {
+                                                <form asp-action="MudaVisivel" style="margin-top: 5px">
+                                                    <input type="hidden" name="filmeId" value="@item.Id" />
+                                                    <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                                    <input type="submit" class="btn btn-outline-secondary" value="Esconder" style="width: 110px" />
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <form asp-action="MudaVisivel" style="margin-top: 5px">
+                                                    <input type="hidden" name="filmeId" value="@item.Id" />
+                                                    <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                                    <input type="submit" class="btn btn-outline-success" value="Mostrar" style="width: 110px" />
+                                                </form>
+                                            }
+                                        }
+                                        @if (item.Utilizador.Email == User.Identity.Name.ToLower())
+                                        {
+                                            <a class="btn btn-outline-warning" style="width:110px ; margin-top:5px" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                                        }
+                                    </td>
                                 </tr>
                             }
                         }

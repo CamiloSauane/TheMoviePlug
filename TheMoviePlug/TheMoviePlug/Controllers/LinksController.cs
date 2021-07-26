@@ -54,6 +54,56 @@ namespace TheMoviePlug.Controllers
             return View();
         }
 
+
+        // POST: Links/MudaVisivel
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Função que mudar a Visibilidade de um Link
+        /// </summary>
+        /// <param name="linkId">Id do Link que vai sofrer alteração na visibulidade</param>
+        /// <returns>A respetiva View</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MudaVisivel(int linkId)
+        {
+            // Vai buscar o Link a partir do parâmetro recebido (linkId) 
+            var link = _context.Links.Where(l => l.Id == linkId).FirstOrDefault();
+
+            // Dependendo da Visibilidade, vai se reverter
+            if (link.Visivel == true)
+            {
+                link.Visivel = false;
+            }
+            else
+            {
+                link.Visivel = true;
+            }
+
+            // Verifica se o ModelState é válido
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Atualiza o Link na base de dados
+                    _context.Update(link);
+                    // Guarda as alterações feitas na base de dados
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception)
+                {
+                    // Apresenta uma mensagem de erro se ocorreu uma excepção nas linhas de código acima
+                    ModelState.AddModelError("", "Ocorreu um erro na mudança da visibilidade do Link!");
+                }
+            }
+
+            // Redireciona para a página do Filme
+            return RedirectToAction(nameof(Index));
+        }
+
+
         // POST: Links/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
