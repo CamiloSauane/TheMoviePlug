@@ -110,16 +110,14 @@
                                             @if (item.Visivel)
                                             {
                                                 <form asp-action="MudaVisivel" style="margin-top: 5px">
-                                                    <input type="hidden" name="filmeId" value="@item.Id" />
-                                                    <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                                    <input type="hidden" name="linkId" value="@item.Id" />
                                                     <input type="submit" class="btn btn-outline-secondary" value="Esconder" style="width: 110px" />
                                                 </form>
                                             }
                                             else
                                             {
                                                 <form asp-action="MudaVisivel" style="margin-top: 5px">
-                                                    <input type="hidden" name="filmeId" value="@item.Id" />
-                                                    <input type="hidden" name="linkId" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                                    <input type="hidden" name="linkId" value="@item.Id" />
                                                     <input type="submit" class="btn btn-outline-success" value="Mostrar" style="width: 110px" />
                                                 </form>
                                             }

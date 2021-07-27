@@ -87,22 +87,22 @@
                                     </td>
                                 }
                                 <td>
-                                    <a class="btn btn-outline-warning" style="width:110px ; margin-top:10px; margin-bottom:10px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                                    <a class="btn btn-outline-primary" style="width:110px; margin-bottom:5px" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
 
                                     @if (User.IsInRole("Gestor") && item.Email != User.Identity.Name.ToLower())
                                     {
                                         if (item.Ativo)
                                         {
-                                            <form asp-action="MudaAtivo" style="margin-top:2px">
+                                            <form asp-action="MudaAtivo">
                                                 <input type="hidden" name="utilizadorId" value="@Html.DisplayFor(modelItem => item.Id)" />
-                                                <input type="submit" class="btn btn-outline-danger" value="Bloquear" />
+                                                <input type="submit" class="btn btn-outline-danger" value="Bloquear" style="width:110px" />
                                             </form>
                                         }
                                         else
                                         {
-                                            <form asp-action="MudaAtivo" style="margin-top:2px">
+                                            <form asp-action="MudaAtivo">
                                                 <input type="hidden" name="utilizadorId" value="@Html.DisplayFor(modelItem => item.Id)" />
-                                                <input type="submit" class="btn btn-outline-secondary" value="Desbloquear" />
+                                                <input type="submit" class="btn btn-outline-secondary" value="Desbloquear" style="width:110px" />
                                             </form>
                                         }
 
